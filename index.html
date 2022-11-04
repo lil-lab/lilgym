@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="lilGym">
+  <meta name="keywords" content="lilGym">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>lilGym</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><i>lil</i>Gym: Natural Language Visual Reasoning with Reinforcement Learning</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://annshin.github.io">Anne Wu</a>,</span>
+            <span class="author-block">
+              <a href="http://www.cs.umd.edu/~kdbrant/">Kianté Brantley</a>,</span>
+            <span class="author-block">
+              <a href="https://kojimano.github.io">Noriyuki Kojima</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://yoavartzi.com">Yoav Artzi</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Cornell University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2211.01994"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/lil-lab/lilgym"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code & Data (11/09)</span>
+                  </a>
+              </span>
+              <!-- Model Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Models (soon)</span>
+                  </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+    <!-- Animation. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+      <!-- <div id="results-carousel" class="carousel results-carousel"> -->
+        <div class="item item-tower">
+          <video poster="" id="tower" autoplay controls muted loop playsinline width="500" height="315" >
+            <source src="./static/videos/lilgym_tower_long_random_walks.mp4">
+          </video>
+        </div>
+        <p>&nbsp;</p>
+        <div class="item item-scatter">
+          <video poster="" id="scatter" autoplay controls muted loop playsinline width="500" height="315">
+            <source src="./static/videos/lilgym_scatter_long_random_walks.mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+	    We present <b><i>lil</i>Gym</b>,<sup>*</sup> a new benchmark for language-conditioned reinforcement learning in visual environments. 
+	    <i>lil</i>Gym is based on 2,661 highly-compositional human-written natural language statements grounded in an interactive visual environment.
+          </p>
+          <p>
+	    We annotate all statements with executable Python programs representing their meaning to enable exact reward computation in every possible world state. 
+	    Each statement is paired with multiple start states and reward functions to form thousands of distinct Markov Decision Processes of varying difficulty.
+	    We experiment with <i>lil</i>Gym with different models and learning regimes. Our results and analysis show that while existing methods are able to achieve non-trivial performance, <i>lil</i>Gym forms a challenging open problem. lilGym is available at <a href="https://github.com/lil-lab/lilgym">https://github.com/lil-lab/lilgym</a>.
+          </p>
+          <p>
+            <sup>*</sup><i>lil</i>Gym stands for Language, Interaction, and Learning Gym.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+
+
+  	<!-- Re-rendering. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Examples</h2>
+          <div class="content has-text-justified">
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h5 class="title is-5 has-text-centered">Tower-Scratch</h5>
+        <div class="columns is-centered">
+          <div class="item item-towerscratch-ex">
+            <video poster="" id="towerscratch-ex" autoplay controls muted loop playsinline width="560" height="315" >
+              <source src="./static/videos/lilgym_gold_tower_scratch_ex.mp4">
+            </video>
+          </div>
+        </div>
+        <div style="line-height:0px;">
+            <br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h5 class="title is-5 has-text-centered">Tower-FlipIt</h5>
+        <div class="columns is-centered">
+          <div class="item item-towerflipit-ex">
+            <video poster="" id="towerflipit-ex" autoplay controls muted loop playsinline width="560" height="315" >
+              <source src="./static/videos/lilgym_gold_tower_flipit_ex.mp4">
+            </video>
+          </div>
+        </div>
+        <div style="line-height:0px;">
+            <br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h5 class="title is-5 has-text-centered">Scatter-Scratch</h5>
+        <div class="columns is-centered">
+          <div class="item item-scatterscratch-ex">
+            <video poster="" id="scatterscratch-ex" autoplay controls muted loop playsinline width="560" height="315" >
+              <source src="./static/videos/lilgym_gold_scatter_scratch_ex.mp4">
+            </video>
+          </div>
+        </div>
+        <div style="line-height:0px;">
+            <br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h5 class="title is-5 has-text-centered">Scatter-FlipIt</h5>
+        <div class="columns is-centered">
+          <div class="item item-scatterflipit-ex">
+            <video poster="" id="scatterflipit-ex" autoplay controls muted loop playsinline width="560" height="315" >
+              <source src="./static/videos/lilgym_gold_scatter_flipit_ex.mp4">
+            </video>
+          </div>
+        </div>
+        <div style="line-height:0px;">
+            <br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+
+    <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">Annotation examples</h2>
+      <div class="content has-text-justified">
+      
+        
+        <p>Example sentences with the example images displayed alongside them during annotation
+(left), and their annotated Python program representation (right). Both sentences and logical forms
+are True for the corresponding image.</p>
+        <div class="content has-text-justified">
+          <img src="./static/images/lilgym_annotation_examples.png"
+                 class="interpolation-image"
+                 alt="annotation examples"/>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content has-text-justified">
+    <h2 class="title">BibTeX</h2>
+
+
+   <pre><code>@misc{wu2022lilgym,
+        title={lilGym: Natural Language Visual Reasoning with Reinforcement Learning}, 
+        author={Wu, Anne and Brantley, Kianté and Kojima, Noriyuki and Artzi, Yoav},
+        year={2022},
+        eprint={2211.01994},
+        archivePrefix={arXiv},
+        primaryClass={cs.CL}
+  }</code></pre>
+
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+        <div class="content">
+          <p>
+	    The website's template is based on <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>, by <a href="https://github.com/keunhong">Keunhong Park</a>.
+          </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 # *lil*Gym: Natural Language Visual Reasoning with Reinforcement Learning
 
-[arXiv]() | code & data (coming on Wednesday Nov. 9, 2022) | [website]()
+[arXiv](https://arxiv.org/abs/2211.01994) | code & data (coming on Wednesday Nov. 9, 2022) | [website](https://lil-lab.github.io/lilgym/)
 
 ## Table of Contents
 
@@ -19,16 +19,16 @@ We experiment with *lil*Gym with different models and learning regimes. Our resu
 
 ---
 
-For more details, please refer to the paper "[lilGym: Natural Language Visual Reasoning with Reinforcement Learning]()", Anne Wu, Kianté Brantley, Noriyuki Kojima, Yoav Artzi.
+For more details, please refer to the paper "[lilGym: Natural Language Visual Reasoning with Reinforcement Learning](https://arxiv.org/abs/2211.01994)", Anne Wu, Kianté Brantley, Noriyuki Kojima, Yoav Artzi.
 
 ### Examples
 Tower-Scratch (left), Tower-FlipIt (right)
 
-<img src="/media/images/lilgym_gold_tower_scratch_ex.gif" alt="tower-scratch" width="400"/> <img src="/media/images/lilgym_gold_tower_flipit_ex.gif" alt="tower-flipit" width="400"/>
+<img src="/media/images/lilgym_gold_tower_scratch_ex.gif" alt="tower-scratch" width="300"/> <img src="/media/images/lilgym_gold_tower_flipit_ex.gif" alt="tower-flipit" width="300"/>
 
 Scatter-Scratch (left), Scatter-FlipIt (right)
 
-<img src="/media/images/lilgym_gold_scatter_scratch_ex.gif" alt="scatter-scratch" width="400"/> <img src="/media/images/lilgym_gold_scatter_flipit_ex.gif" alt="scatter-flipit" width="400"/>
+<img src="/media/images/lilgym_gold_scatter_scratch_ex.gif" alt="scatter-scratch" width="300"/> <img src="/media/images/lilgym_gold_scatter_flipit_ex.gif" alt="scatter-flipit" width="300"/>
 
 
 ## Data
@@ -48,7 +48,7 @@ MIT
       title={lilGym: Natural Language Visual Reasoning with Reinforcement Learning}, 
       author={Wu, Anne and Brantley, Kianté and Kojima, Noriyuki and Artzi, Yoav},
       year={2022},
-      eprint={},
+      eprint={2211.01994},
       archivePrefix={arXiv},
       primaryClass={cs.LG}
 }

@@ -1,6 +1,8 @@
 # *lil*Gym: Natural Language Visual Reasoning with Reinforcement Learning
 
-[arXiv](https://arxiv.org/abs/2211.01994) | code & data (coming on Wednesday Nov. 9, 2022) | [website](https://lil-lab.github.io/lilgym/)
+[arXiv](https://arxiv.org/abs/2211.01994) | [code & data](https://github.com/lil-lab/lilgym) | [website](https://lil-lab.github.io/lilgym/)
+
+baselines: coming soon
 
 ## Table of Contents
 
@@ -17,27 +19,90 @@ Each statement is paired with multiple start states and reward functions to form
  
 We experiment with *lil*Gym with different models and learning regimes. Our results and analysis show that while existing methods are able to achieve non-trivial performance, *lil*Gym forms a challenging open problem. 
 
----
-
-For more details, please refer to the paper "[lilGym: Natural Language Visual Reasoning with Reinforcement Learning](https://arxiv.org/abs/2211.01994)", Anne Wu, Kianté Brantley, Noriyuki Kojima, Yoav Artzi.
-
 ### Examples
-Tower-Scratch (left), Tower-FlipIt (right)
+TowerScratch (left), TowerFlipIt (right)
 
 <img src="/media/images/lilgym_gold_tower_scratch_ex.gif" alt="tower-scratch" width="300"/> <img src="/media/images/lilgym_gold_tower_flipit_ex.gif" alt="tower-flipit" width="300"/>
 
-Scatter-Scratch (left), Scatter-FlipIt (right)
+ScatterScratch (left), ScatterFlipIt (right)
 
 <img src="/media/images/lilgym_gold_scatter_scratch_ex.gif" alt="scatter-scratch" width="300"/> <img src="/media/images/lilgym_gold_scatter_flipit_ex.gif" alt="scatter-flipit" width="300"/>
 
 
 ## Data
-Coming on November 9, 2022.
 
+The data and details can be found in: `lilgym/data/`.
+
+A description can be found in [lilGym: Natural Language Visual Reasoning with Reinforcement Learning](https://arxiv.org/abs/2211.01994). The data is based on the [Cornell Natural Language Visual Reasoning (NLVR) Corpus v1.0 (Suhr et al. 2017)](https://aclanthology.org/P17-2034/) corpus.
 
 ## Codebase
-Coming on November 9, 2022.
 
+### Installation
+
+1. Create a conda environment (Python >= 3.7)
+```
+conda create -n lilgym python=3.7
+conda activate lilgym
+```
+
+2. Clone the repo: `git clone https://github.com/lil-lab/lilgym.git`
+
+3. Install the dependencies
+```
+cd lilgym
+pip install -r requirements.txt
+```
+
+To install the package from source:
+```
+cd lilgym
+pip install .
+```
+
+### Example
+
+The environments follow standard Gym API.
+
+Following is a short demo script:
+
+```python
+import gym
+from lilgym.data.utils import get_data
+
+data = get_data('tower', 'scratch', 'train')
+env = gym.make("TowerScratch-v0", data=data, stop_forcing=False)
+
+env.seed(1)
+observation = env.reset()
+
+for _ in range(100):
+    action = env.action_space.sample()
+    observation, reward, done, info = env.step(action)
+
+    if done:
+        observation = env.reset()
+```
+
+There are four configurations: `TowerScratch`, `TowerFlipIt`, `ScatterScratch` and `ScatterFlipIt`. 
+
+An example for each is given below:
+
+```python
+data = get_data('tower', 'flipit', 'train')
+env = gym.make("TowerFlipIt-v0", data=data, stop_forcing=False)
+
+data = get_data('scatter', 'scratch', 'train')
+env = gym.make("ScatterScratch-v0", data=data, stop_forcing=False)
+
+data = get_data('scatter', 'flipit', 'train')
+env = gym.make("ScatterFlipIt-v0", data=data, stop_forcing=False)
+```
+
+There are three data splits for each configuration (i.e. `TowerScratch`, `TowerFlipIt`, `ScatterScratch` or `ScatterFlipIt`): `train`, `dev`, and `test`.
+
+The option `stop_forcing` specifies whether to use the training algorithm with stop forcing. Inference is always done without stop forcing.
+
+The baselines with the training and inference code will also be soon released.
 
 ### License
 MIT

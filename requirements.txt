@@ -1,0 +1,5 @@
+torch == 1.12.1
+gym == 0.21.0
+shapely == 1.8.2
+importlib-metadata == 4.13.0
+scikit-image == 0.19.2

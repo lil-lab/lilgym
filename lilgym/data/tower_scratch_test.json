@@ -1,0 +1,1298 @@
+{
+    "28": {
+        "sentence": "There are two towers with a blue second block.",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_second(y))))), 2)"
+    },
+    "43": {
+        "sentence": "at least one tower with three blocks has a yellow block at the base",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_bottom(y)))))"
+    },
+    "47": {
+        "sentence": "There is 1 tower with a blue block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_bottom(y))))) == 1"
+    },
+    "48": {
+        "sentence": "There is a yellow block as the base of a tower.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_bottom(x)))"
+    },
+    "68": {
+        "sentence": "There are two towers with a black block at the top",
+        "lf": "count(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_top(x))) == 2"
+    },
+    "77": {
+        "sentence": "There are 3 blue squares touching the wall.",
+        "lf": "ge(count(filter_obj(all_items, lambda x: is_blue(x) and is_square(x) and is_touching_wall(x))), 3)"
+    },
+    "78": {
+        "sentence": "There are two the same color blocks attached to a yellow block.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and (exist(get_above(x)) and exist(get_above(get_above(x))) and all_same_color(union(get_above(x), get_above(get_above(x)))) or exist(get_below(x)) and exist(get_below(get_below(x))) and all_same_color(union(get_below(x), get_below(get_below(x)))) or exist(get_below(x)) and exist(get_above(x)) and all_same_color(union(get_below(x), get_above(x))))))"
+    },
+    "88": {
+        "sentence": "There is a tower with exactly two blocks having a black block at the top",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 2 and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_top(y)))))"
+    },
+    "93": {
+        "sentence": "There is a black block above a yellow block.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and exist(get_box_all_above(x)) and Color.BLACK in get_set_colors(get_box_all_above(x))))"
+    },
+    "109": {
+        "sentence": "There is 1 tower with a blue block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_top(y))))) == 1"
+    },
+    "128": {
+        "sentence": "There is at least 1 tower with 2 black blocks stacked together",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and exist(get_above(y)) and is_black(unique(get_above(y))))))), 1)"
+    },
+    "129": {
+        "sentence": "There are two blue items touching the wall.",
+        "lf": "count(filter_obj(all_items, lambda x: is_blue(x) and is_touching_wall(x))) == 2"
+    },
+    "144": {
+        "sentence": "There is a black tower.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and All(x.all_items_in_box(), is_black)))"
+    },
+    "153": {
+        "sentence": "There is no black block as the top of a tower with at most three blocks.",
+        "lf": "NOT(exist(filter_obj(all_items, lambda x: is_black(x) and is_top(x) and x.box.is_tower() and le(count(x.box.all_items_in_box()), 3))))"
+    },
+    "169": {
+        "sentence": "there is one tower with exactly two blocks having a yellow block at the top",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 2 and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_top(y)))))"
+    },
+    "180": {
+        "sentence": "There is at least one blue block on a black block.",
+        "lf": "ge(count(filter_obj(all_items, lambda x: is_blue(x) and exist(get_below(x)) and is_black(unique(get_below(x))))), 1)"
+    },
+    "184": {
+        "sentence": "There is 1 tower with a black block at the bottom",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_bottom(y))))) == 1"
+    },
+    "207": {
+        "sentence": "There are 2 towers with a yellow block at the top",
+        "lf": "count(filter_obj(all_items, lambda x: x.box.is_tower() and is_top(x) and is_yellow(x))) == 2"
+    },
+    "211": {
+        "sentence": "There  is 1 tower with at least 1 yellow block in it",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_color(x.all_items_in_box(), Color.YELLOW)))) == 1"
+    },
+    "232": {
+        "sentence": "There is 1 tower with at least 3 yellow blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and ge(count(filter_color(x.all_items_in_box(), Color.YELLOW)), 3))) == 1"
+    },
+    "267": {
+        "sentence": "There is a box with 3 squares of different color.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_shape(x.all_items_in_box(), Shape.SQUARE)) == 3 and exist(filter_obj(x.all_items_in_box(), lambda y: is_square(y) and is_blue(y))) and exist(filter_obj(x.all_items_in_box(), lambda y: is_square(y) and is_yellow(y))) and exist(filter_obj(x.all_items_in_box(), lambda y: is_square(y) and is_black(y)))))"
+    },
+    "275": {
+        "sentence": "t least one of tower with exactly three blocks has a blue block in the middle",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda y: is_second(y) and is_blue(y))))), 1)"
+    },
+    "280": {
+        "sentence": "There is a black tower with only two blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 2 and count(filter_color(x.all_items_in_box(), Color.BLACK)) == 2))"
+    },
+    "281": {
+        "sentence": "There is a one block tower that the color is not yellow.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 1 and NOT(is_yellow(unique(x.all_items_in_box())))))"
+    },
+    "282": {
+        "sentence": "There is a tower with only two blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2))"
+    },
+    "311": {
+        "sentence": "There is exactly one black block as the base of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_bottom(x))) == 1"
+    },
+    "320": {
+        "sentence": "There are two towers that are the same in height.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(filter_obj(all_boxes, lambda y: y.is_tower() and count(x.all_items_in_box()) == count(y.all_items_in_box()))) == 2))"
+    },
+    "334": {
+        "sentence": "There is a black block attach to a yellow block that is attach to a blue block.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and exist(filter_color(get_touching(x), Color.BLACK)) and exist(filter_color(get_touching(x), Color.BLUE))))"
+    },
+    "364": {
+        "sentence": "There is a black block as the top of a tower with four blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_top(x) and count(x.box.all_items_in_box()) == 4))"
+    },
+    "390": {
+        "sentence": "There is a blue block on a blue block.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and exist(filter_color(intersect(get_above(x), get_touching(x)), Color.BLUE))))"
+    },
+    "399": {
+        "sentence": "there is at least one tower with four blocks with a yellow block as third block",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_third(y))))), 1)"
+    },
+    "405": {
+        "sentence": "There is a tower with only two yellow blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(filter_color(x, Color.YELLOW)) == 2, x.is_tower())))"
+    },
+    "422": {
+        "sentence": "There is a box with a blue item touching the wall and a yellow item on top of it.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_touching_wall(x, Side.ANY)), exist(filter_color(get_above(x), Color.YELLOW)))))"
+    },
+    "432": {
+        "sentence": "There is black block that attached only to blue black.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), exist(filter_color(get_touching(x), Color.BLUE))), count(get_touching(x)) == 1)))"
+    },
+    "437": {
+        "sentence": "There is a box with 3 items of which some are yellow.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x) == 3, exist(filter_color(x, Color.YELLOW)))))"
+    },
+    "438": {
+        "sentence": "There is 1 tower with at least 1 yellow block in it",
+        "lf": "count(filter_obj(all_boxes, lambda x: AND(exist(filter_color(x, Color.YELLOW)), x.is_tower()))) == 1"
+    },
+    "445": {
+        "sentence": "Two towers have a black block at the base",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_bottom(x)), x.box.is_tower()))) == 2"
+    },
+    "462": {
+        "sentence": "There is a yellow tower.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(contained({Color.YELLOW}, get_set_colors(x)), count(get_set_colors(x)) == 1), x.is_tower())))"
+    },
+    "473": {
+        "sentence": "there is one tower with a  blue block at the top",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_top(x)), x.box.is_tower()))) == 1"
+    },
+    "480": {
+        "sentence": "There is 1 tower with 2 black blocks at the base",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(exist(filter_obj(x, lambda x: AND(is_black(x), is_bottom(x)))), exist(filter_obj(x, lambda x: AND(is_black(x), is_second(x))))), x.is_tower())))"
+    },
+    "485": {
+        "sentence": "there is a tower with exactly one block which is not of black color",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(not contained({Color.BLACK}, get_set_colors(x)), count(x) == 1), x.is_tower())))"
+    },
+    "512": {
+        "sentence": "the tower with three blocks has one yellow object",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 1, count(x.all_items_in_box()) == 3), x.is_tower())))"
+    },
+    "529": {
+        "sentence": "There is a yellow block as the top of a tower with blue blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_top(x)))), Any(get_below(x), lambda x: is_blue(x))), x.is_tower())))"
+    },
+    "534": {
+        "sentence": "There is at least one yellow block as the top of a tower with three blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(AND(is_yellow(x), is_top(x)), count(x.box.all_items_in_box()) == 3), x.box.is_tower())))"
+    },
+    "536": {
+        "sentence": "There is a blue block as the top of a tower.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_top(x)), x.box.is_tower())))"
+    },
+    "549": {
+        "sentence": "There is a blue block as the base of a tower with three blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(AND(is_blue(x), is_bottom(x)), count(x.box.all_items_in_box()) == 3), x.box.is_tower())))"
+    },
+    "606": {
+        "sentence": "there are atleast two towers with a blue block at the top and above a yellow block.",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), exist(filter_obj(get_above(x), lambda x: AND(is_blue(x), is_top(x))))))))) >= 2"
+    },
+    "607": {
+        "sentence": "There is a tower with four blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and all(filter_obj(x.all_items_in_box(), lambda x: x.box.is_tower()))))"
+    },
+    "622": {
+        "sentence": "There is a yellow tower with more than one block.",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) >= 2 and All(x.all_items_in_box(), lambda x: is_yellow(x)))) == 1"
+    },
+    "638": {
+        "sentence": "The top of the three towers are not the same.",
+        "lf": "All(combinations(filter_obj(all_items, lambda x: is_top(x)), 2), lambda x: not all_same_color(x))"
+    },
+    "711": {
+        "sentence": "There is exactly one tower with a yellow block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_top(y))))) == 1"
+    },
+    "731": {
+        "sentence": "There is 1 tower with a black block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_bottom(y))))) == 1"
+    },
+    "736": {
+        "sentence": "There are 2 towers with a black block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_bottom(y))))) == 2"
+    },
+    "749": {
+        "sentence": "There is 1 blue block",
+        "lf": "count(filter_color(all_items, Color.BLUE)) == 1"
+    },
+    "754": {
+        "sentence": "There is a yellow block between two black blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and exist(filter_color(intersect(get_below(x), get_touching(x)), Color.BLACK)) and exist(filter_color(intersect(get_above(x), get_touching(x)), Color.BLACK))))"
+    },
+    "755": {
+        "sentence": "There is one tower with four blocks with a blue block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_top(y))))) == 1"
+    },
+    "758": {
+        "sentence": "There is a tower with a blue block below a yellow block at the top",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and exist(get_above(y)) and is_yellow(unique(get_above(y))) and is_top(unique(get_above(y)))))))"
+    },
+    "764": {
+        "sentence": "the tower with four blocks has a blue block at the top",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_top(y)))))"
+    },
+    "793": {
+        "sentence": "There is a box with only 2 blue and one yellow item.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLUE)) == 2 and count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 1 and count(x.all_items_in_box()) == 3))"
+    },
+    "821": {
+        "sentence": "There is no blue block on a blue block.",
+        "lf": "NOT(exist(filter_obj(all_items, lambda x: is_blue(x) and exist(filter_color(get_box_all_above(x), Color.BLUE)))))"
+    },
+    "826": {
+        "sentence": "there is at least one tower which has exactly one block which is of black color",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 1 and is_black(unique(x.all_items_in_box())))), 1)"
+    },
+    "833": {
+        "sentence": "There are two black blocks as the top of a tower with at least two blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_top(x) and exist(get_below(x)) and is_black(unique(get_below(x)))))"
+    },
+    "869": {
+        "sentence": "there is exactly one tower with four blocks having blocks of all three colors",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and exist(filter_color(x.all_items_in_box(), Color.BLUE)) and exist(filter_color(x.all_items_in_box(), Color.BLACK)) and exist(filter_color(x.all_items_in_box(), Color.YELLOW)))) == 1"
+    },
+    "882": {
+        "sentence": "There is no blue block above a black block.",
+        "lf": "NOT(exist(filter_obj(all_items, lambda x: is_blue(x) and exist(filter_color(intersect(get_below(x), get_touching(x)), Color.BLACK)))))"
+    },
+    "883": {
+        "sentence": "there is a tower with at least two consecutive blacks blocks over a blue block",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and exist(get_below(x)) and is_blue(unique(get_below(x))) and exist(get_above(x)) and is_black(unique(get_above(x)))))"
+    },
+    "896": {
+        "sentence": "there is one tower with a blue block over a yellow block",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_blue(x) and exist(get_below(x)) and is_yellow(unique(get_below(x)))))"
+    },
+    "911": {
+        "sentence": "there is at least one tower with exactly two blocks having a black block at the base",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_bottom(x)), count(x.box.all_items_in_box()) == 2)))"
+    },
+    "912": {
+        "sentence": "There is a box with 2 black items touching each other.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_black(x), count(filter_color(get_touching(x), Color.BLACK)) == 1)))"
+    },
+    "917": {
+        "sentence": "there is a tower which has a yellow block at the base",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_yellow(x), is_bottom(x))))"
+    },
+    "918": {
+        "sentence": "There is a box with 3 items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3))"
+    },
+    "919": {
+        "sentence": "There is 1 tower with a black block at the top",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_top(x)), x.box.is_tower()))) == 1"
+    },
+    "945": {
+        "sentence": "There is a box with a black item touching the wall and a yellow item right on top of it.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_touching_wall(x, Side.ANY)))), exist(filter_color(get_touching(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_touching_wall(x, Side.ANY)))), Color.YELLOW)))))"
+    },
+    "961": {
+        "sentence": "There is a two blocks tower and the base is blue and the top is black.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_bottom(x)))), exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_top(x))))), count(x.all_items_in_box()) == 2)))"
+    },
+    "967": {
+        "sentence": "There is a tower with three blocks, and it has a yellow block.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x.all_items_in_box()) == 3, exist(filter_color(x.all_items_in_box(), Color.YELLOW)))))"
+    },
+    "988": {
+        "sentence": "There is a blue block as the top of a tower with four blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_top(x)), AND(count(x.box.all_items_in_box()) == 4, x.box.is_tower()))))"
+    },
+    "1002": {
+        "sentence": "there is exactly one tower with one block.",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_obj(x.all_items_in_box(), lambda x: x.box.is_tower())) == 1)) == 1"
+    },
+    "1011": {
+        "sentence": "there is one tower which has a yellow block above a blue block",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), exist(filter_obj(get_above(x), lambda x: is_yellow(x)))))))) == 1"
+    },
+    "1016": {
+        "sentence": "There is at least 1 tower with a black block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_bottom(x)))))) >= 1"
+    },
+    "1064": {
+        "sentence": "There is one tower with yellow block above a black block",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), exist(filter_obj(get_above(x), lambda x: is_yellow(x)))))))) == 1"
+    },
+    "1078": {
+        "sentence": "There are exactly 2 items touching the wall.",
+        "lf": "count(filter_obj(all_items, lambda x:  is_touching_wall(x))) == 2"
+    },
+    "1082": {
+        "sentence": "the tower with four blocks has atleast one yellow block",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x),  x.box.is_tower())))))"
+    },
+    "1088": {
+        "sentence": "The third block of a tower from the top is blue.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_top(y) and get_below(y) and get_below(get_below(y)) and is_blue(unique(get_below(get_below(y))))))))"
+    },
+    "1113": {
+        "sentence": "Each tower has at least 1 yellow block",
+        "lf": "All(all_boxes, lambda x: x.is_tower() and ge(count(filter_color(x.all_items_in_box(), Color.YELLOW)), 1))"
+    },
+    "1144": {
+        "sentence": "there is at least one tower with exactly three blocks",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3)), 1)"
+    },
+    "1186": {
+        "sentence": "There is a tower with only one block.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 1))"
+    },
+    "1244": {
+        "sentence": "there are two towers with a blue block on the top",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_top(x)), x.box.is_tower()))) == 2"
+    },
+    "1254": {
+        "sentence": "There is a box with 3 items of 2 different colors of which one is yellow.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(count(x.all_items_in_box()) == 3, exist(filter_color(x.all_items_in_box(), Color.YELLOW))), OR(exist(filter_color(x.all_items_in_box(), Color.BLACK)), exist(filter_color(x.all_items_in_box(), Color.BLUE))))))"
+    },
+    "1257": {
+        "sentence": "there is exactly one tower with a blue block over a yellow block",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), exist(filter_color(get_below(x), Color.YELLOW))), x.box.is_tower()))) == 1"
+    },
+    "1271": {
+        "sentence": "There is 1 tower with 1 blue block at the top",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_top(x)), x.box.is_tower()))) == 1"
+    },
+    "1272": {
+        "sentence": "There is at least 1 tower with 2 blue blocks stacked together",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), exist(filter_color(get_touching(x), Color.BLUE))), x.box.is_tower())))"
+    },
+    "1277": {
+        "sentence": "There is a yellow block on a blue block.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_yellow(x), exist(filter_color(get_below(x), Color.BLUE)))))"
+    },
+    "1291": {
+        "sentence": "there is one tower with a blue block over a black block",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), exist(filter_color(get_below(x), Color.BLACK))), x.box.is_tower()))) == 1"
+    },
+    "1318": {
+        "sentence": "There is a four blocks  tower with a black base and the second block is blue.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_bottom(x)) and exist(filter_obj(get_above(x), lambda x: is_blue(x)))))))"
+    },
+    "1339": {
+        "sentence": "There is a tower with two blue blocks and at least one black block.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), x.box.is_tower()))) == 2 and count(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), x.box.is_tower()))) >= 1))"
+    },
+    "1409": {
+        "sentence": "There are 2 blue blocks",
+        "lf": "count(filter_obj(all_items, lambda x: is_blue(x))) == 2"
+    },
+    "1443": {
+        "sentence": "There is a box with 2 items and a yellow item on top.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x) == 2, exist(filter_obj(x, lambda x: AND(is_yellow(x), is_top(x)))))))"
+    },
+    "1472": {
+        "sentence": "There is a box with 3 items and a yellow item on top.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_top(x)), count(x.box) == 3)))"
+    },
+    "1529": {
+        "sentence": "there are two towers with a black block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_top(y))))) == 2"
+    },
+    "1535": {
+        "sentence": "There are 5 black blocks",
+        "lf": "count(filter_color(all_items, Color.BLACK)) == 5"
+    },
+    "1538": {
+        "sentence": "There is a tower with exactly three blocks having a blue block above a yellow block",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and exist(get_below(y)) and is_yellow(unique(get_below(y)))))))"
+    },
+    "1543": {
+        "sentence": "There is 1 tower with 3 blocks of the same colour",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3 and (count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 3 or count(filter_color(x.all_items_in_box(), Color.BLUE)) == 3 or count(filter_color(x.all_items_in_box(), Color.BLACK)) == 3))) == 1"
+    },
+    "1568": {
+        "sentence": "There is a black block bellow a yellow blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_black(x) and exist(filter_color(get_above(x), Color.YELLOW))))"
+    },
+    "1572": {
+        "sentence": "There is 1 tower with 3 blocks stacked together of the same colour",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: exist(get_below(y)) and exist(get_above(y)) and query_color(unique(get_below(y))) == query_color(y) == query_color(unique(get_above(y))))))) == 1"
+    },
+    "1593": {
+        "sentence": "There are 3 yellow blocks",
+        "lf": "count(filter_color(all_items, Color.YELLOW)) == 3"
+    },
+    "1621": {
+        "sentence": "there is one tower which has blocks of blue color only",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLUE)) == count(x.all_items_in_box())))"
+    },
+    "1635": {
+        "sentence": "There are 3 black blocks",
+        "lf": "count(filter_color(all_items, Color.BLACK)) == 3"
+    },
+    "1638": {
+        "sentence": "There are three blocks with yellow blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x.all_items_in_box()) == 3, count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 3)))"
+    },
+    "1653": {
+        "sentence": "There is a box with items of which there is only one blue item and one black item.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(filter_color(x, Color.BLUE)) == 1, count(filter_color(x, Color.BLACK)) == 1)))"
+    },
+    "1673": {
+        "sentence": "There is 1 tower with 2 yellow blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: AND(count(filter_color(x, Color.YELLOW)) == 2, x.is_tower()))) == 1"
+    },
+    "1674": {
+        "sentence": "There are at least two blue blocks as the top of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_top(x)), x.box.is_tower()))) >= 2"
+    },
+    "1728": {
+        "sentence": "There are 2 towers with at least 1 yellow block",
+        "lf": "count(filter_obj(all_boxes, lambda x: AND(count(filter_color(x, Color.YELLOW)) >= 1, x.is_tower()))) == 2"
+    },
+    "1736": {
+        "sentence": "There is exactly one blue block as the top of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_top(x)), x.box.is_tower()))) == 1"
+    },
+    "1745": {
+        "sentence": "There are two boxes with items of all 3 different colors.",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(get_set_colors(x)) == 3)) == 2"
+    },
+    "1751": {
+        "sentence": "There is no yellow block as the top of a tower.",
+        "lf": "not exist(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_top(x)), x.box.is_tower())))"
+    },
+    "1755": {
+        "sentence": "There is only one yellow block as the base of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_bottom(x)), x.box.is_tower()))) == 1"
+    },
+    "1791": {
+        "sentence": "The base of a tower is blue.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_bottom(x)), x.box.is_tower())))"
+    },
+    "1828": {
+        "sentence": "there is a tower with exactly two blocks with a blue block at the top",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 2 and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_top(y)))))"
+    },
+    "1852": {
+        "sentence": "there is exactly one tower with a black block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_bottom(y))))) == 1"
+    },
+    "1856": {
+        "sentence": "there is one tower which has a black block over a black block",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and exist(get_above(y)) and is_black(unique(get_above(y))))))) == 1"
+    },
+    "1879": {
+        "sentence": "There is a box with only one yellow item and that item is touching the wall.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 1 and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_touching_wall(y)))))"
+    },
+    "1907": {
+        "sentence": "There are two towers that the base are blue.",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_bottom(y))))) == 2"
+    },
+    "1916": {
+        "sentence": "There is a box with 2 items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2))"
+    },
+    "1921": {
+        "sentence": "There are two towers that has only one block.",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 1)) == 2"
+    },
+    "1924": {
+        "sentence": "there are two towers with a black block above a black block",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and exist(get_above(y)) and is_black(unique(get_above(y))))))) == 2"
+    },
+    "1925": {
+        "sentence": "There is a blue block above a yellow block.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and exist(filter_color(get_below(x), Color.YELLOW))))"
+    },
+    "1927": {
+        "sentence": "There are two towers that has the same base color that is not black.",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_bottom(x) and count(filter_obj(all_items, lambda y: y.box.is_tower() and is_bottom(y) and NOT(is_black(y)) and equal_color(query_color(x), query_color(y)))) == 2))"
+    },
+    "1930": {
+        "sentence": "There is a box with 4 black and bule items where the blue item is touching the wall.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and All(x.all_items_in_box(), lambda y: is_blue(y) or is_black(y)) and exist(filter_color(x.all_items_in_box(), Color.BLACK)) and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_touching_wall(y)))))"
+    },
+    "1932": {
+        "sentence": "there is one tower which has only yellow blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: All(x.all_items_in_box(), is_yellow))) == 1"
+    },
+    "1937": {
+        "sentence": "There is at least 1 tower with a yellow block at the base",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_bottom(y))))), 1)"
+    },
+    "1956": {
+        "sentence": "There is a three blocks tower which has one black block that is in the middle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3 and exist(filter_color(x.all_items_in_box(), Color.BLACK)) and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_second(y)))))"
+    },
+    "2014": {
+        "sentence": "There are 2 towers with a black block at the top",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_top(x)), x.box.is_tower()))) == 2"
+    },
+    "2022": {
+        "sentence": "there are exactly two towers with a yellow block at the base",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_bottom(x)), x.box.is_tower()))) == 2"
+    },
+    "2026": {
+        "sentence": "There is a box with only one yellow item.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x, Color.YELLOW)) == 1))"
+    },
+    "2041": {
+        "sentence": "there is one tower with a black block at the base and a blue block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: AND(exist(filter_obj(x, lambda x: AND(is_black(x), is_bottom(x)))), exist(filter_obj(x, lambda x: AND(is_blue(x), is_top(x))))))) == 1"
+    },
+    "2068": {
+        "sentence": "there is at least one tower with exactly two objects either of black or yellow color",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x) == 2, contained({Color.BLACK, Color.YELLOW}, get_set_colors(x)))))"
+    },
+    "2074": {
+        "sentence": "there is atleast one tower with exactly  two blocks having a blue block at the top",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(count(x) == 2, exist(filter_obj(x, lambda x: AND(is_blue(x), is_top(x))))), x.is_tower())))"
+    },
+    "2080": {
+        "sentence": "there are two towers with a blue block over a blue block",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x, lambda x: AND(is_blue(x), exist(filter_color(get_above(x), Color.BLUE))))))) == 2"
+    },
+    "2083": {
+        "sentence": "There is a black block a sthe base of a tower with more than two blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(AND(is_black(x), is_bottom(x)), count(x.box) >= 2), x.box.is_tower())))"
+    },
+    "2095": {
+        "sentence": "There is a box with only 2 items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x) == 2))"
+    },
+    "2101": {
+        "sentence": "there is exactly one tower with a blue block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_bottom(y))))) == 1"
+    },
+    "2127": {
+        "sentence": "there is exactly one tower with a black block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_top(y))))) == 1"
+    },
+    "2184": {
+        "sentence": "Two of the towers has a blue block under a yellow block",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and exist(filter_color(get_box_all_above(y), Color.YELLOW)))))) == 2"
+    },
+    "2203": {
+        "sentence": "there is a tower which has blocks of all three colors",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(get_set_colors(x.all_items_in_box())) == 3))"
+    },
+    "2217": {
+        "sentence": "There are 4 black blocks",
+        "lf": "count(filter_color(all_items, Color.BLACK)) == 4"
+    },
+    "2239": {
+        "sentence": "There is a box with 4 items of 2 different colors.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and count(get_set_colors(x.all_items_in_box())) == 2))"
+    },
+    "2250": {
+        "sentence": "There is a box with items of only yellow color.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: All(x.all_items_in_box(), is_yellow)))"
+    },
+    "2272": {
+        "sentence": "There is a yellow block as the base of a tower with three blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_bottom(x) and x.box.is_tower() and count(x.box.all_items_in_box()) == 3))"
+    },
+    "2273": {
+        "sentence": "There is 1 tower with only yellow blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and All(x.all_items_in_box(), is_yellow))) >= 1"
+    },
+    "2283": {
+        "sentence": "The top of a three blocks tower is yellow.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_top(y)))))"
+    },
+    "2292": {
+        "sentence": "The items of all 3 different colors are touching the wall.",
+        "lf": "count(get_set_colors(filter_obj(all_items, is_touching_wall))) == 3"
+    },
+    "2323": {
+        "sentence": "There are two blue blocks as the top of a tower with at least two blocks.",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) >= 2 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_top(x)))))) == 2"
+    },
+    "2334": {
+        "sentence": "there is at least one tower which has blocks of all three colors",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(get_set_colors(x.all_items_in_box())) == 3))"
+    },
+    "2353": {
+        "sentence": "There is at least one yellow block as the base of a tower.",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_bottom(x)))))) >= 1"
+    },
+    "2394": {
+        "sentence": "There is no tower with exactly two yellow blocks.",
+        "lf": "NOT(exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 2)))"
+    },
+    "2399": {
+        "sentence": "There is a box with 4 items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4))"
+    },
+    "2407": {
+        "sentence": "There is no blue block as the base of a tower.",
+        "lf": "not exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_bottom(x)), x.box.is_tower())))"
+    },
+    "2423": {
+        "sentence": "There is a black block as the base of a tower with four blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(AND(is_black(x), is_bottom(x)), count(x.box) == 4), x.box.is_tower())))"
+    },
+    "2481": {
+        "sentence": "There is a tower with only one black block.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1 and AND(count(filter_color(x, Color.BLACK)) == 1, x.is_tower())))"
+    },
+    "2491": {
+        "sentence": "the tower with three blocks has a black block at the top",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(AND(is_black(x), is_top(x)), count(x.box) == 3), x.box.is_tower())))"
+    },
+    "2494": {
+        "sentence": "There are two towers with four blocks.",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x) == 4)) == 2"
+    },
+    "2525": {
+        "sentence": "There is a box with 4 items of which 3 are black.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and count(filter_color(x.all_items_in_box(), Color.BLACK)) == 3))"
+    },
+    "2527": {
+        "sentence": "There is at least one tower with exactly three blocks, and it has at least one yellow block.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_square(x))))))"
+    },
+    "2532": {
+        "sentence": "there is one tower with exactly three blocks having a yellow block over a blue block",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), exist(filter_obj(get_below(x), lambda x: is_blue(x))))))))"
+    },
+    "2543": {
+        "sentence": "There is a tower with a black block at the top and a yellow block at the base",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_top(x)))) and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_bottom(x))))))"
+    },
+    "2544": {
+        "sentence": "There are 2 yellow blocks",
+        "lf": "count(filter_color(all_items, Color.YELLOW)) == 2"
+    },
+    "2566": {
+        "sentence": "There is a box with 4 items of which two are blue, one is yellow and one is black.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and count(filter_color(x.all_items_in_box(), Color.BLUE)) == 2 and count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 1 and count(filter_color(x.all_items_in_box(), Color.BLACK)) == 1))"
+    },
+    "2571": {
+        "sentence": "There is a blue block on a yellow block.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_yellow(x), exist(filter_obj(get_above(x), lambda x: is_blue(x))))))"
+    },
+    "2574": {
+        "sentence": "There is a blue block bellow a yellow block.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), exist(filter_obj(get_below(x), lambda x: is_blue(x))))))))"
+    },
+    "2588": {
+        "sentence": "There is 1 tower with 2 black blocks stacked together",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(AND(is_black(x), x.box.is_tower()), exist(filter_obj(get_above(x), lambda x: is_black(x)))))))) == 1"
+    },
+    "2589": {
+        "sentence": "There is a box with 2 items of which one is black.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2 and count(filter_obj(x.all_items_in_box(), lambda x: is_black(x))) == 1))"
+    },
+    "2597": {
+        "sentence": "There is a single block blue tower.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), x.box.is_tower())))))"
+    },
+    "2608": {
+        "sentence": "There are 2 black blocks",
+        "lf": "count(filter_obj(all_items, lambda x: is_black(x) and is_square(x))) == 2"
+    },
+    "2617": {
+        "sentence": "There are at least 4 black blocks",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_black(x), is_square(x)))) >= 4"
+    },
+    "2635": {
+        "sentence": "There is a box with only blue and yellow items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(exist(filter_obj(x.all_items_in_box(), lambda x: is_blue(x))), exist(filter_obj(x.all_items_in_box(), lambda x: is_yellow(x)))), not exist(filter_obj(x.all_items_in_box(), lambda x: is_black(x))))))"
+    },
+    "2642": {
+        "sentence": "There is a blue tower.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(x.is_tower(), All(x.all_items_in_box(), is_blue))))"
+    },
+    "1": {
+        "sentence": "There is at least 1 tower with a black block at the top",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_top(x)))"
+    },
+    "20": {
+        "sentence": "There is a black block as the top of a tower with three blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_top(y)))))"
+    },
+    "21": {
+        "sentence": "there are exactly two towers with a blue block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_bottom(y))))) == 2"
+    },
+    "32": {
+        "sentence": "One of the three towers has a black base.",
+        "lf": "count(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_bottom(x))) == 1"
+    },
+    "35": {
+        "sentence": "There are two black blocks as the base of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: is_black(x) and is_bottom(x))) >= 2"
+    },
+    "71": {
+        "sentence": "there is exactly one tower with  a black block at the base",
+        "lf": "count(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_bottom(x))) == 1"
+    },
+    "75": {
+        "sentence": "There is a box with 4 items of all 3 different colors and a black item touching the wall.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and exist(filter_color(x.all_items_in_box(), Color.BLACK)) and exist(filter_color(x.all_items_in_box(), Color.BLUE)) and exist(filter_color(x.all_items_in_box(), Color.YELLOW)) and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_touching_wall(y)))))"
+    },
+    "137": {
+        "sentence": "There is a blue block as the base of a tower.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and is_bottom(x) and x.box.is_tower()))"
+    },
+    "145": {
+        "sentence": "There is at least one black tower with only one block.",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: x.is_tower() and All(x.all_items_in_box(), is_black) and count(x.all_items_in_box()) == 1)), 1)"
+    },
+    "161": {
+        "sentence": "The base and top of the four blocks tower are blue.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4 and All(filter_obj(x.all_items_in_box(), lambda y: is_top(y) or is_bottom(y)), is_blue)))"
+    },
+    "177": {
+        "sentence": "There is a tower with only blue and black blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and All(x.all_items_in_box(), lambda y: is_blue(y) or is_black(y)) and count(get_set_colors(x.all_items_in_box())) == 2))"
+    },
+    "236": {
+        "sentence": "There is a tower with exactly three blocks where one of the block is blue",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3 and exist(filter_color(x.all_items_in_box(), Color.BLUE))))"
+    },
+    "240": {
+        "sentence": "there is one tower with a blue block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_bottom(y))))) == 1"
+    },
+    "246": {
+        "sentence": "There are 2 towers with a yellow block in the middle",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: NOT(is_bottom(y)) and NOT(is_top(y)) and is_yellow(y))))) == 2"
+    },
+    "250": {
+        "sentence": "There are exactly two blue blocks as the top of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: is_blue(x) and is_top(x))) == 2"
+    },
+    "268": {
+        "sentence": "There is a box with 3 items of 2 different colors.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3 and (count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 2 or count(filter_color(x.all_items_in_box(), Color.BLUE)) == 2 or count(filter_color(x.all_items_in_box(), Color.BLACK)) == 2)))"
+    },
+    "273": {
+        "sentence": "There are two towers with at least three blocks.",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and ge(count(x.all_items_in_box()), 3))) == 2"
+    },
+    "291": {
+        "sentence": "There is a box with 3 items where the yellow is in the middle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and NOT(is_bottom(y)) and NOT(is_top(y))))))"
+    },
+    "329": {
+        "sentence": "There are 3 blue blocks",
+        "lf": "count(filter_color(all_items, Color.BLUE)) == 3"
+    },
+    "338": {
+        "sentence": "There is only one color touching the wall.",
+        "lf": "equal_set(filter_obj(all_items, is_touching_wall), filter_obj(all_items, lambda x: is_touching_wall(x) and is_black(x))) or equal_set(filter_obj(all_items, is_touching_wall), filter_obj(all_items, lambda x: is_touching_wall(x) and is_blue(x))) or equal_set(filter_obj(all_items, is_touching_wall), filter_obj(all_items, lambda x: is_touching_wall(x) and is_yellow(x)))"
+    },
+    "383": {
+        "sentence": "There is one tower with a blue block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_top(y))))) == 1"
+    },
+    "440": {
+        "sentence": "the tower with three blocks has a black block at the bae",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(AND(is_black(x), is_bottom(x)), count(x.box) == 3), x.box.is_tower())))"
+    },
+    "557": {
+        "sentence": "There is 1 tower with yellow and blue blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: AND(AND(exist(filter_color(x.all_items_in_box(), Color.BLUE)), exist(filter_color(x.all_items_in_box(), Color.YELLOW))), not exist(filter_color(x.all_items_in_box(), Color.BLACK))))) == 1"
+    },
+    "567": {
+        "sentence": "The yellow item is on top in every box.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_yellow(x), is_top(x)))) == 3"
+    },
+    "587": {
+        "sentence": "there is one tower with only  one block which is black",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_black(x), count(x.box.all_items_in_box()) == 1), x.box.is_tower()))) == 1"
+    },
+    "589": {
+        "sentence": "there is at least one tower with  exactly three blocks",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x.all_items_in_box()) == 3, x.is_tower())))"
+    },
+    "598": {
+        "sentence": "Two smaller towers have the same height.",
+        "lf": "(count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1)) == 2 and exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) > 1))) or (count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2)) == 2 and exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) > 2))) or (count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3)) == 2 and exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) > 3)))"
+    },
+    "630": {
+        "sentence": "there are two towers whoch has a blue block over a black block",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), exist(filter_obj(get_below(x), lambda x: is_black(x)))))))) == 2"
+    },
+    "640": {
+        "sentence": "There is a tower with exactly two blocks having a yellow block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_top(x)))))) == 1"
+    },
+    "665": {
+        "sentence": "there are two towers with a yellow block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_bottom(x)))))) == 2"
+    },
+    "685": {
+        "sentence": "There is a box with the same set of items.",
+        "lf": "all_same(all_boxes)"
+    },
+    "717": {
+        "sentence": "There is 1 tower that has at least 1 black block",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and ge(count(filter_color(x.all_items_in_box(), Color.BLACK)), 1))) == 1"
+    },
+    "746": {
+        "sentence": "There are two yellow blocks on a black block.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_black(x) and count(filter_obj(x.box.all_items_in_box(), lambda y: is_yellow(y) and y in get_box_all_above(x))) == 2))"
+    },
+    "750": {
+        "sentence": "There is no yellow block on a black block.",
+        "lf": "NOT(exist(filter_obj(all_items, lambda x: is_yellow(x) and exist(filter_color(intersect(get_below(x), get_touching(x)), Color.BLACK)))))"
+    },
+    "757": {
+        "sentence": "There are two black blocks as the top of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_top(x))) == 2"
+    },
+    "770": {
+        "sentence": "there is exactly one tower with a yellow block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_bottom(y))))) == 1"
+    },
+    "786": {
+        "sentence": "there is one tower with a blue block above a black block",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and exist(get_below(y)) and is_black(unique(get_below(y))))))) == 1"
+    },
+    "803": {
+        "sentence": "There is a box with blue item touching the wall and a black item on top.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_touching_wall(y) and exist(filter_color(intersect(get_touching(y), get_above(y)), Color.BLACK))))))"
+    },
+    "817": {
+        "sentence": "There is a blue block as the top of a tower with exactly two blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_blue(x) and is_top(x) and count(x.box.all_items_in_box()) == 2))"
+    },
+    "834": {
+        "sentence": "There is 1 black block",
+        "lf": "count(filter_color(all_items, Color.BLACK)) == 1"
+    },
+    "838": {
+        "sentence": "there is one tower with exactly four blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4)) == 1"
+    },
+    "868": {
+        "sentence": "The top of the three towers are not the same in colors.",
+        "lf": "All(combinations(filter_obj(all_items, lambda x: is_top(x)), 2), lambda x: not all_same_color(x))"
+    },
+    "905": {
+        "sentence": "There is a yellow block below the black block.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_black(x), exist(filter_color(get_below(x), Color.YELLOW)))))"
+    },
+    "913": {
+        "sentence": "One of the tower has a black block above a blue block",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_black(x), exist(filter_color(get_below(x), Color.BLUE)))))"
+    },
+    "949": {
+        "sentence": "There is a box with 4 items of only black and blue color.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(AND(count(x.all_items_in_box()) == 4, exist(filter_color(x.all_items_in_box(), Color.BLUE))), exist(filter_color(x.all_items_in_box(), Color.BLACK))), not exist(filter_color(x.all_items_in_box(), Color.YELLOW)))))"
+    },
+    "958": {
+        "sentence": "There are atleast two towers with a blue block at the base",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_bottom(x)), x.box.is_tower()))) >= 2"
+    },
+    "972": {
+        "sentence": "ll 3 towers have at least 1 yellow block",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_color(x.all_items_in_box(), Color.YELLOW)))) == 3"
+    },
+    "990": {
+        "sentence": "There is a blue block above a black block.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_black(x), exist(filter_color(get_above(x), Color.BLUE)))))"
+    },
+    "991": {
+        "sentence": "There is one tower with exactly three blocks of one color each block",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) >= 3 and count(get_set_colors(x.all_items_in_box())) == 3))"
+    },
+    "1001": {
+        "sentence": "There is 1 tower with 2 black blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), x.box.is_tower()))) == 2)) == 1"
+    },
+    "1017": {
+        "sentence": "there are exactly two towers with a black block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_bottom(x)))))) == 2"
+    },
+    "1031": {
+        "sentence": "there is one tower which has a blue block at the top",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_top(x))))))"
+    },
+    "1039": {
+        "sentence": "There is a blue tower with only one block.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), x.box.is_tower())))))"
+    },
+    "1061": {
+        "sentence": "There is a box with 3 items of which at least 1 is blue.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3 and exist(filter_color(x.all_items_in_box(), Color.BLUE))))"
+    },
+    "1073": {
+        "sentence": "There is no tower with four blocks.",
+        "lf": "NOT(exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4)))"
+    },
+    "1081": {
+        "sentence": "There is a block that is not yellow that has two yellow blocks bellow it.",
+        "lf": "exist(filter_obj(all_items, lambda x: NOT(is_yellow(x)) and exist(filter_color(get_below(x), Color.YELLOW)) and exist(filter_color(get_below(get_below(x)), Color.YELLOW))))"
+    },
+    "1083": {
+        "sentence": "There is a tower with only same blocks in color.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: all_same_color(x.all_items_in_box())))"
+    },
+    "1127": {
+        "sentence": "There are two blue blocks that are attached with each other.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and exist(filter_color(get_touching(x), Color.BLUE))))"
+    },
+    "1143": {
+        "sentence": "There is a black block as the base of tower with four blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_black(x) and is_bottom(x) and count(x.box.all_items_in_box()) == 4))"
+    },
+    "1147": {
+        "sentence": "There is a blue block as the top of a tower with three blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_blue(x) and is_top(x) and count(x.box.all_items_in_box()) == 3))"
+    },
+    "1157": {
+        "sentence": "There is a yellow block as the base of a tower with four blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: x.box.is_tower() and is_yellow(x) and is_bottom(x) and count(x.box.all_items_in_box()) == 4))"
+    },
+    "1162": {
+        "sentence": "There is a tower with exactly three blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 3))"
+    },
+    "1167": {
+        "sentence": "there is a tower with black as a base and yellow as a top block",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_bottom(y))) and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_top(y)))))"
+    },
+    "1179": {
+        "sentence": "there is at least one tower with four blocks having the blocks of all three colors",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4 and exist(filter_color(x.all_items_in_box(), Color.BLUE)) and exist(filter_color(x.all_items_in_box(), Color.BLACK)) and exist(filter_color(x.all_items_in_box(), Color.YELLOW)))), 1)"
+    },
+    "1195": {
+        "sentence": "there are two towers with a blue block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_top(y))))) == 2"
+    },
+    "1224": {
+        "sentence": "there is one tower with exactly one blue object only",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1 and AND(count(filter_color(x.all_items_in_box(), Color.BLUE)) == 1, x.is_tower()))) == 1"
+    },
+    "1239": {
+        "sentence": "The top of a tower is yellow.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_top(x)), x.box.is_tower())))"
+    },
+    "1242": {
+        "sentence": "There is a box with 2 items where the black item is on top.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_top(x)), count(x.box.all_items_in_box()) == 2)))"
+    },
+    "1263": {
+        "sentence": "There is a tower with four blocks and the two blocks are black.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x.all_items_in_box()) == 4, count(filter_color(x.all_items_in_box(), Color.BLACK)) == 2)))"
+    },
+    "1288": {
+        "sentence": "there is one tower with a yellow block at the base",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_bottom(x)), x.box.is_tower()))) == 1"
+    },
+    "1300": {
+        "sentence": "One tower has a different base color.",
+        "lf": "OR(OR((count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.YELLOW)) == 1) and (count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.BLUE)) != 1) and (count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.BLACK)) != 1), (count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.YELLOW)) != 1) and (count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.BLUE)) == 1) and (count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.BLACK)) != 1)), (count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.YELLOW)) != 1) and (count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.BLUE)) != 1) and (count(filter_color(filter_obj(all_items, lambda x: is_bottom(x)), Color.BLACK)) == 1))"
+    },
+    "1320": {
+        "sentence": "There is no yellow block as the top of a tower with exactly two blocks.",
+        "lf": "NOT(exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_top(x)))))))"
+    },
+    "1332": {
+        "sentence": "There is a black block as the top of a tower with at least three blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) >= 3 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_top(x))))))"
+    },
+    "1351": {
+        "sentence": "The bases of the three towers are two yellow and one black.",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_bottom(x)))))) == 2 and count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_bottom(x)))))) == 1"
+    },
+    "1369": {
+        "sentence": "There are 2 towers with at least 1 blue block",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLUE)) >= 1)) == 2"
+    },
+    "1386": {
+        "sentence": "There are two yellow blocks as the top of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_yellow(x), is_top(x)))) == 2 or exist(filter_obj(all_items, lambda y: AND(is_yellow(y), is_top(y)) and get_below(y) and is_yellow(unique(get_below(y)))))"
+    },
+    "1415": {
+        "sentence": "There are two towers with each tower containing block of single color",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(get_set_colors(x)) == 1)) == 2"
+    },
+    "1422": {
+        "sentence": "There are two grey squares desides each other with yellow blocks.",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_color(x, Color.YELLOW)))) == 2"
+    },
+    "1460": {
+        "sentence": "There is exactly one tower with a yellow block at base",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_bottom(x)), x.box.is_tower()))) == 1"
+    },
+    "1464": {
+        "sentence": "There is only tower that the base is black.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_bottom(x)), x.box.is_tower()))) == 1"
+    },
+    "1469": {
+        "sentence": "There are two single block towers and the color are the same.",
+        "lf": "AND(count(filter_obj(all_boxes, lambda x: AND(count(x) == 1, x.is_tower()))) == 2, count(get_set_colors(filter_obj(all_items, lambda x: AND(count(x.box) == 1, x.box.is_tower())))) == 1)"
+    },
+    "1473": {
+        "sentence": "There are two towers that has second black blocks.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_second(x), is_black(x)), x.box.is_tower()))) == 2"
+    },
+    "1474": {
+        "sentence": "There is a box with only one blue item.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x, Color.BLUE)) == 1))"
+    },
+    "1476": {
+        "sentence": "There is a black block under a blue block.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_black(x), exist(filter_color(get_above(x), Color.BLUE)))))"
+    },
+    "1501": {
+        "sentence": "There is a box with the same number of blue and yellow items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLUE)) == count(filter_color(x.all_items_in_box(), Color.YELLOW))))"
+    },
+    "1522": {
+        "sentence": "There is 1 tower with 2 blue blocks at the base",
+        "lf": "count(filter_obj(all_items, lambda x: x.box.is_tower() and is_blue(x) and is_bottom(x) and exist(get_above(x)) and is_blue(unique(get_above(x))))) == 1"
+    },
+    "1541": {
+        "sentence": "There is a blue tower with two blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and All(x.all_items_in_box(), is_blue) and count(x.all_items_in_box()) == 2))"
+    },
+    "1566": {
+        "sentence": "There is 1 tower with 1 black block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_top(y))))) == 1"
+    },
+    "1573": {
+        "sentence": "There is 1 tower with at least 2 blue blocks stacked together",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and exist(get_above(y)) and is_blue(unique(get_above(y))))))) == 1"
+    },
+    "1587": {
+        "sentence": "There is a box with 3 items of different colors where the black item is on top.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3 and exist(filter_color(x.all_items_in_box(), Color.YELLOW)) and exist(filter_color(x.all_items_in_box(), Color.BLUE)) and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_top(y)))))"
+    },
+    "1600": {
+        "sentence": "there are two towers with yellow block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_top(y))))) == 2"
+    },
+    "1605": {
+        "sentence": "There is a blue block as the top of a tower with at least three blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_top(x)), count(x.box.all_items_in_box()) >= 3)))"
+    },
+    "1630": {
+        "sentence": "there is a tower with exactly two blocks having a blue block at the base.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(count(x.all_items_in_box()) == 2, exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_bottom(x))))), x.is_tower())))"
+    },
+    "1641": {
+        "sentence": "There is a yellow block as the base of a tower with two yellow blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(count(filter_color(x, Color.YELLOW)) == 2, exist(filter_obj(x, lambda x: AND(is_yellow(x), is_bottom(x))))), x.is_tower())))"
+    },
+    "1647": {
+        "sentence": "there is 1 tower with 2 blue blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_color(x, Color.BLUE)) == 2)) == 1"
+    },
+    "1650": {
+        "sentence": "There is a blue block as the base of atower with two blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x) == 2, exist(filter_obj(x, lambda x: AND(is_blue(x), is_bottom(x)))))))"
+    },
+    "1655": {
+        "sentence": "There is a box with 3 items with only black and blue color.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(count(x) == 3, not member_of(Color.YELLOW, get_set_colors(x))), contained({Color.BLUE, Color.BLUE}, get_set_colors(x)))))"
+    },
+    "1658": {
+        "sentence": "there is at least one tower with exactly three blocks having the blocks of all three colors",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x) == 3, count(get_set_colors(x)) == 3)))"
+    },
+    "1659": {
+        "sentence": "There is 1 tower with 1 blue block at the base",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_bottom(x)), x.box.is_tower()))) == 1"
+    },
+    "1662": {
+        "sentence": "there are two towers with a yellow block at the top",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_top(x)), x.box.is_tower()))) == 2 "
+    },
+    "1683": {
+        "sentence": "There is at least one blue block as the base of a tower with exactly three blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(AND(is_blue(x), is_bottom(x)), count(x.box) == 3), x.box.is_tower())))"
+    },
+    "1686": {
+        "sentence": "There is no blue block as the base of a tower with two blocks.",
+        "lf": "not exist(filter_obj(all_items, lambda x: AND(AND(AND(is_blue(x), is_bottom(x)), count(x.box) == 2), x.box.is_tower())))"
+    },
+    "1709": {
+        "sentence": "There is one tower with exactly one object which is yellow in color",
+        "lf": "count(filter_obj(all_boxes, lambda x: AND(count(x) == 1, member_of(Color.YELLOW, get_set_colors(x))))) == 1"
+    },
+    "1766": {
+        "sentence": "There are two of the three towers that has a black top.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_top(x)), x.box.is_tower()))) == 2"
+    },
+    "1772": {
+        "sentence": "There is at least 1 tower with a blue block at the base",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_bottom(x)), x.box.is_tower())))"
+    },
+    "1776": {
+        "sentence": "The second block from the base of a not more that three blocks tower is black.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_second(x), is_black(x)), count(x.box) <= 3)))"
+    },
+    "1807": {
+        "sentence": "There is exactly one tower with a black block at base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_bottom(y))))) == 1"
+    },
+    "1809": {
+        "sentence": "There is a blue block as the top of a tower with at least two blue blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and is_top(x) and x.box.is_tower() and ge(count(filter_color(x.box.all_items_in_box(), Color.BLUE)), 2)))"
+    },
+    "1820": {
+        "sentence": "One tower with 3 yellow blocks stacked together",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and count(filter_color(get_touching(y), Color.YELLOW)) == 2))))"
+    },
+    "1840": {
+        "sentence": "the tower with four blocks has a blue color block below the top block",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and exist(get_above(y)) and is_top(unique(get_above(y)))))))"
+    },
+    "1841": {
+        "sentence": "Two blue items are on top.",
+        "lf": "count(filter_obj(all_items, lambda x: is_blue(x) and is_top(x))) == 2"
+    },
+    "1853": {
+        "sentence": "One of the three towers has a blue base.",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_bottom(y))))) == 1"
+    },
+    "1866": {
+        "sentence": "There is only one tower that has a base of blue block.",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_bottom(y))))) == 1"
+    },
+    "1878": {
+        "sentence": "there is one tower with blocks of black color only",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and All(x.all_items_in_box(), is_black))) == 1"
+    },
+    "1894": {
+        "sentence": "ll the top of the towers are the same in color.",
+        "lf": "all_same_color(filter_obj(all_items, lambda x: x.box.is_tower() and is_top(x)))"
+    },
+    "1922": {
+        "sentence": "There is only one box with 3 items.",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3)) == 1"
+    },
+    "1928": {
+        "sentence": "The tower with exactly four blocks has a yellow block over a black block",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and exist(get_below(y)) and is_black(unique(get_below(y))))))) == 1"
+    },
+    "1931": {
+        "sentence": "Items of all 3 colors are touching the wall.",
+        "lf": "count(get_set_colors(filter_obj(all_items, is_touching_wall))) == 3"
+    },
+    "1939": {
+        "sentence": "There is 1 tower with a yellow block in the middle of it",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and NOT(is_top(y)) and NOT(is_bottom(y)))))) == 1"
+    },
+    "1951": {
+        "sentence": "There is a black block on a black block.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_black(x) and exist(filter_color(intersect(get_above(x), get_touching(x)), Color.BLACK))))"
+    },
+    "1983": {
+        "sentence": "There is a four blocks tower that has two black blocks attached with each other.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and exist(filter_color(get_touching(y), Color.BLACK))))))"
+    },
+    "2005": {
+        "sentence": "There is a black block as the base of two towers.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_bottom(x)), x.box.is_tower()))) == 2"
+    },
+    "2045": {
+        "sentence": "there is one tower with three blocks with a yellow color block at the top",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_top(x)), count(x.box) == 3))) == 1"
+    },
+    "2064": {
+        "sentence": "there is a tower with three blocks having all the blocks of the same color",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(x) == 3, all_same_color(x))))"
+    },
+    "2079": {
+        "sentence": "There is a box with items of only black color.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(all_same_color(x), exist(filter_color(x, Color.BLACK)))))"
+    },
+    "2120": {
+        "sentence": "There is a yellow block as the top of a tower with only two blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_top(x) and x.box.is_tower() and count(x.box.all_items_in_box()) == 2))"
+    },
+    "2131": {
+        "sentence": "There is a box with a black item touching the wall and only one different color on top of it.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_touching_wall(y) and all_same_color(get_box_all_above(y)) and NOT(is_black(unique(get_above(y))))))))"
+    },
+    "2146": {
+        "sentence": "There is at least one blue block as the top of a tower.",
+        "lf": "ge(count(filter_obj(all_items, lambda x: is_blue(x) and is_top(x) and x.box.is_tower())), 1)"
+    },
+    "2148": {
+        "sentence": "There is only one blue block as the base of a tower.",
+        "lf": "count(filter_obj(all_items, lambda x: is_blue(x) and is_bottom(x) and x.box.is_tower())) == 1"
+    },
+    "2162": {
+        "sentence": "There are two blue blocks as the base of a tower with at least two blocks.",
+        "lf": "count(filter_obj(all_items, lambda x: x.box.is_tower() and is_blue(x) and is_bottom(x) and ge(count(x.box.all_items_in_box()), 2))) == 2"
+    },
+    "2187": {
+        "sentence": "There is 1 tower with a yellow block at the bottom",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_bottom(y))))) == 1"
+    },
+    "2188": {
+        "sentence": "There is exactly one tower with a blue block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_bottom(y))))) == 1"
+    },
+    "2200": {
+        "sentence": "There is a tower with yellow block at the top and at the base",
+        "lf": "exist(filter_obj(all_boxes, lambda x: x.is_tower() and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_top(y))) and exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_bottom(y)))))"
+    },
+    "2227": {
+        "sentence": "There is a black block on a yellow block.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_black(x) and exist(get_below(x)) and is_yellow(unique(get_below(x)))))"
+    },
+    "2253": {
+        "sentence": "One of the tower with four blocks has a black block in between two yellow blocks",
+        "lf": "count(filter_obj(all_boxes, lambda x: x.is_tower() and count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and All(get_touching(y), is_yellow))))) == 1"
+    },
+    "2281": {
+        "sentence": "There is a blue block as the top of a tower with two blocks.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and is_top(x) and x.box.is_tower() and count(x.box.all_items_in_box()) == 2))"
+    },
+    "2314": {
+        "sentence": "There is only one blue item touching the wall.",
+        "lf": "count(filter_obj(all_items, lambda x: AND( is_blue(x), is_touching_wall(x)))) == 1"
+    },
+    "2316": {
+        "sentence": "There is a blue block as the base of a tower with at least three blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) >= 3 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_bottom(x))))))"
+    },
+    "2338": {
+        "sentence": "There is a box with 2 items of which 1 is blue.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2 and count(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_square(x)))) == 1))"
+    },
+    "2373": {
+        "sentence": "There are 3 towers with a yellow block at the base",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_bottom(x)))))) == 3"
+    },
+    "2377": {
+        "sentence": "There is only one square touching the wall.",
+        "lf": "count(filter_obj(all_items, lambda x: AND( is_square(x), is_touching_wall(x)))) == 1"
+    },
+    "2386": {
+        "sentence": "There are 2 towers with a blue block at the top",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_top(x)))))) == 2"
+    },
+    "2398": {
+        "sentence": "There is at least one tower with four blocks.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 ))"
+    },
+    "2400": {
+        "sentence": "There is a tower with exactly three blocks having a black block at the top",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_top(x))))))"
+    },
+    "2485": {
+        "sentence": "There is a blue block on a black block.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_blue(x), exist(filter_color(get_below(x), Color.BLACK)))))"
+    },
+    "2490": {
+        "sentence": "There is 1 tower with 2 yellow blocks stacked together",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), exist(filter_color(get_touching(x), Color.YELLOW))), x.box.is_tower())))"
+    },
+    "2585": {
+        "sentence": "There is a box with a black item on top and a blue ittem beneath it.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), exist(filter_obj(get_below(x), lambda x: is_blue(x))))))))"
+    },
+    "2587": {
+        "sentence": "There is box with a blue item at the third place from the bottom.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_third(x))))))"
+    },
+    "2658": {
+        "sentence": "the tower with exactly four blocks has a blue block over a blue block",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), exist(filter_color(get_below(x), Color.BLUE))), count(x.box.all_items_in_box()) == 4)))"
+    }
+}

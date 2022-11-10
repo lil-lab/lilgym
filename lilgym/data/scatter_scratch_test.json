@@ -1,0 +1,622 @@
+{
+    "58": {
+        "sentence": "There is exactly one blue triangle not touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: is_blue(x) and is_triangle(x) and NOT(is_touching_wall(x)))) == 1"
+    },
+    "114": {
+        "sentence": "there is a yellow circle touching the edge",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_circle(x) and is_touching_wall(x)))"
+    },
+    "115": {
+        "sentence": "There is exactly one circle touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: is_circle(x) and is_touching_wall(x))) == 1"
+    },
+    "306": {
+        "sentence": "There is a circle closely touching a corner of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_circle(x) and is_closely_touching_corner(x)))"
+    },
+    "325": {
+        "sentence": "there is a black triangle touching the base",
+        "lf": "exist(filter_obj(all_items, lambda x: is_black(x) and is_triangle(x) and is_touching_wall(x, Side.BOTTOM)))"
+    },
+    "335": {
+        "sentence": "There is a blue item closely touching the bottom of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and is_closely_touching_wall(x, Side.BOTTOM)))"
+    },
+    "372": {
+        "sentence": "t least one grey square contains exactly three objects",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 3)), 1)"
+    },
+    "400": {
+        "sentence": "black triangle and a black circle are together in 1 box",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_triangle(y))) and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_circle(y))))) == 1"
+    },
+    "412": {
+        "sentence": "Each grey box contains atleast two objects of different color touching the edge",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(get_set_colors(filter_obj(x, lambda x: is_touching_wall(x, Side.ANY)))) >= 2)) == 3"
+    },
+    "464": {
+        "sentence": "There is a box with at least two circles and at least two triangles.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(filter_shape(x, Shape.CIRCLE)) >= 2, count(filter_shape(x, Shape.TRIANGLE)) >= 2)))"
+    },
+    "468": {
+        "sentence": "There is a box with a yellow circle and at least one black item.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(exist(filter_obj(x, lambda x: AND(is_yellow(x), is_circle(x)))), exist(filter_color(x, Color.BLACK)))))"
+    },
+    "497": {
+        "sentence": "None of the black circle is touching any edge",
+        "lf": "not exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_circle(x)), is_touching_wall(x, Side.ANY))))"
+    },
+    "553": {
+        "sentence": "There is a box with all 3 different colors and only 1 blue item.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(count(filter_color(x.all_items_in_box(), Color.BLUE)) == 1, exist(filter_color(x.all_items_in_box(), Color.YELLOW))), exist(filter_color(x.all_items_in_box(), Color.BLACK)))))"
+    },
+    "566": {
+        "sentence": "There is 1 box with exactly 1 item",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1)) == 1"
+    },
+    "588": {
+        "sentence": "There is a box with a yellow circle and exactly one yellow triangle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_triangle(x)))) == 1, exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_circle(x)))))))"
+    },
+    "591": {
+        "sentence": "There is 1 box with 2 items",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2))"
+    },
+    "595": {
+        "sentence": "There is a box with a yellow circle, a black circle and a black triangle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_circle(x)))), exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_circle(x))))), exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_triangle(x)))))))"
+    },
+    "610": {
+        "sentence": "There is a black square that is touching the corner.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_square(x), is_black(x)), is_touching_corner(x)))) == 1"
+    },
+    "625": {
+        "sentence": "There is at least 1 box with 1 yellow item",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 1)) >= 1"
+    },
+    "650": {
+        "sentence": "Two blue items are touching the wall.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_blue(x), is_touching_wall(x)))) == 2"
+    },
+    "664": {
+        "sentence": "There are two boxes that has the same number of objects.",
+        "lf": "count(filter_obj(all_boxes[1:], lambda x: count(x.all_items_in_box()) == count(all_boxes[0].all_items_in_box()))) == 1 or count(all_boxes[1].all_items_in_box()) == count(all_boxes[2].all_items_in_box())"
+    },
+    "693": {
+        "sentence": "There is a box with a yellow circle, a yellow square and two black items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLACK)) == 2 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_square(x)))) and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_circle(x))))))"
+    },
+    "709": {
+        "sentence": "There is a box with five items and the colors are yellow and blue.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 5 and All(x.all_items_in_box(), lambda y: is_yellow(y) or is_blue(y))))"
+    },
+    "774": {
+        "sentence": "There is a yellow circle closely touching right wall of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_circle(x) and is_closely_touching_wall(x, Side.RIGHT)))"
+    },
+    "796": {
+        "sentence": "There is a box that has two black circles.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_circle(y))) == 2))"
+    },
+    "814": {
+        "sentence": "There is a small black triangle touching the wall.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_small(x) and is_black(x) and is_triangle(x) and is_touching_wall(x)))"
+    },
+    "865": {
+        "sentence": "There is a box with seven items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 7))"
+    },
+    "874": {
+        "sentence": "There is a yellow circle close to a corner",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_circle(x) and is_closely_touching_corner(x)))"
+    },
+    "898": {
+        "sentence": "There are 2 boxes with only yellow items.",
+        "lf": "count(filter_obj(all_boxes, lambda x: All(x.all_items_in_box(), is_yellow))) == 2"
+    },
+    "957": {
+        "sentence": "There is a box with four items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4))"
+    },
+    "969": {
+        "sentence": "There are 4 blue items",
+        "lf": "count(filter_color(all_items, Color.BLUE)) == 4"
+    },
+    "1168": {
+        "sentence": "There is a box with a blue circle, a black circle and other items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_circle(y))) and exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_circle(y))) and gt(count(x.all_items_in_box()), 2)))"
+    },
+    "1202": {
+        "sentence": "There is a yellow and blue circle touching the corner.",
+        "lf": "AND(exist(filter_obj(all_items, lambda x: AND(is_yellow(x), is_touching_corner(x, Side.ANY)))), exist(filter_obj(all_items, lambda x: AND(is_blue(x), is_touching_corner(x, Side.ANY)))))"
+    },
+    "1225": {
+        "sentence": "There is a box with 3 items of all 3 different colors.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(AND(exist(filter_color(x.all_items_in_box(), Color.YELLOW)), exist(filter_color(x.all_items_in_box(), Color.BLUE))), exist(filter_color(x.all_items_in_box(), Color.BLACK))), count(x.all_items_in_box()) == 3)))"
+    },
+    "1275": {
+        "sentence": "None of the blue circles are touching any edge",
+        "lf": "All(filter_obj(all_items, lambda x: AND(is_blue(x), is_circle(x))), lambda x: not is_touching_wall(x, Side.ANY))"
+    },
+    "1278": {
+        "sentence": "There are 2 boxes with at least 2 blue items",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLUE)) >= 2)) == 2"
+    },
+    "1282": {
+        "sentence": "There are 2 yellow squares",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_yellow(x), is_square(x)))) == 2"
+    },
+    "1289": {
+        "sentence": "There are two squares closely touching the bottom of a box.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_square(x), is_closely_touching_wall(x, Side.BOTTOM)))) == 2"
+    },
+    "1294": {
+        "sentence": "There is only 1 box with at least 1 yellow square",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_square(x)))))) == 1"
+    },
+    "1309": {
+        "sentence": "one of the grey box contains objects which are only square and traingle",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(get_set_shapes(x.all_items_in_box())) == 2 and Shape.SQUARE in get_set_shapes(x.all_items_in_box()) and Shape.TRIANGLE in get_set_shapes(x.all_items_in_box())))"
+    },
+    "1341": {
+        "sentence": "There is 1 box with exactly 2 yellow items",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 2)) == 1"
+    },
+    "1348": {
+        "sentence": "There is a box with three black items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLACK)) == 3))"
+    },
+    "1354": {
+        "sentence": "there is a blue object touching the base",
+        "lf": "exist(filter_obj(all_items, lambda x: AND( is_blue(x), is_touching_wall(x, Side.BOTTOM))))"
+    },
+    "1364": {
+        "sentence": "There is exactly one blue object touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND( is_blue(x), is_touching_wall(x)))) == 1"
+    },
+    "1395": {
+        "sentence": "There are exactly three blue objects not touching any edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_blue(x), NOT(is_touching_wall(x))))) == 3"
+    },
+    "1552": {
+        "sentence": "There is a black circle touching the base edge",
+        "lf": "exist(filter_obj(all_items, lambda x: is_black(x) and is_circle(x) and is_touching_wall(x, Side.BOTTOM)))"
+    },
+    "1580": {
+        "sentence": "There is a box with a yellow circle and a blue circle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_circle(y))) and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_circle(y)))))"
+    },
+    "1624": {
+        "sentence": "There are at least three yellow objects touching any edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_yellow(x), is_touching_wall(x, Side.ANY)))) >= 3"
+    },
+    "1694": {
+        "sentence": "There are exactly three black objects not touching any edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_black(x), not is_touching_wall(x, Side.ANY)))) == 3"
+    },
+    "1743": {
+        "sentence": "There is at least one black item closely touching the bottom of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_black(x), is_closely_touching_wall(x, Side.BOTTOM))))"
+    },
+    "1746": {
+        "sentence": "there are exactly two yellow squares touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_square(x)), is_touching_wall(x, Side.ANY)))) == 2"
+    },
+    "1757": {
+        "sentence": "There are two squares of same color but different size touching the wall.",
+        "lf": "exist(filter_obj(combinations(all_items, 2), lambda x: all_same_color(x) and not all_same_size(x) and All(x, is_touching_wall)))"
+    },
+    "1779": {
+        "sentence": "there is a black square not touching the edge",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_square(x)), not is_touching_wall(x, Side.ANY))))"
+    },
+    "1788": {
+        "sentence": "There are 2 blue squares",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_blue(x), is_square(x)))) == 2"
+    },
+    "1869": {
+        "sentence": "There is a box with 4 items of different shape and all 3 different colors.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and exist(filter_obj(combinations(x.all_items_in_box(), 2), lambda y: NOT(equal_shape(query_shape(y[0]), query_shape(y[1]))))) and count(get_set_colors(x.all_items_in_box())) == 3))"
+    },
+    "1891": {
+        "sentence": "There is 1 blue triangle",
+        "lf": "count(filter_obj(all_items, lambda x: is_blue(x) and is_triangle(x))) == 1"
+    },
+    "1947": {
+        "sentence": "There is a yellow triangle closely touching the bottom of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_triangle(x) and is_closely_touching_wall(x, Side.BOTTOM)))"
+    },
+    "2032": {
+        "sentence": "There is a black square touching the corner.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_square(x)), is_touching_corner(x, Side.ANY))))"
+    },
+    "2095": {
+        "sentence": "There is a box with only 2 items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x) == 2))"
+    },
+    "2104": {
+        "sentence": "There is a yellow circle that is nearly touching the corner.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_circle(x) and is_closely_touching_corner(x)))"
+    },
+    "2117": {
+        "sentence": "There is exactly one black square not touching any edge",
+        "lf": "count(filter_obj(all_items, lambda x: is_black(x) and is_square(x) and NOT(is_touching_wall(x)))) == 1"
+    },
+    "2308": {
+        "sentence": "There is a box with a black triangle, a blue square and a blue circle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_triangle(x)))) and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_square(x)))) and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_circle(x))))))"
+    },
+    "2333": {
+        "sentence": "t least one yellow circle is touching the edge",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_circle(x)), is_touching_wall(x))))"
+    },
+    "2352": {
+        "sentence": "there are yellow items in each box",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_color(x.all_items_in_box(), Color.YELLOW)))) == 3"
+    },
+    "2361": {
+        "sentence": "There is a box with 4 items at most of which one is triangle and the other is circle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4 and exist(filter_obj(x.all_items_in_box(), lambda x:  is_triangle(x))) and exist(filter_obj(x.all_items_in_box(), lambda x:  is_circle(x)))))"
+    },
+    "2384": {
+        "sentence": "There are 2 items closely touching a corner",
+        "lf": "count(filter_obj(all_items, lambda x: is_closely_touching_corner(x))) == 2"
+    },
+    "2388": {
+        "sentence": "there is a black square touching the edge",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_square(x)), is_touching_wall(x))))"
+    },
+    "2424": {
+        "sentence": "there is one yellow square not touching the edge",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_square(x)), not is_touching_wall(x, Side.ANY))))"
+    },
+    "2509": {
+        "sentence": "There is a box with items of 2 different colors of which at least one is a yellow circle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(get_set_colors(x.all_items_in_box())) == 2 and exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_yellow(x), is_circle(x))))))"
+    },
+    "2536": {
+        "sentence": "One of the grey box contains either Black or Blue Circles",
+        "lf": "exist(filter_obj(all_boxes, lambda x:  exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_circle(x)))) or exist(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_circle(x))))))"
+    },
+    "2558": {
+        "sentence": "there is a grey box which contains exactly two black objects",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLACK)) == 2))"
+    },
+    "2610": {
+        "sentence": "There is a black circle closely touching right wall of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_closely_touching_wall(x, Side.RIGHT), is_black(x)), is_circle(x))))"
+    },
+    "2635": {
+        "sentence": "There is a box with only blue and yellow items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(AND(exist(filter_obj(x.all_items_in_box(), lambda x: is_blue(x))), exist(filter_obj(x.all_items_in_box(), lambda x: is_yellow(x)))), not exist(filter_obj(x.all_items_in_box(), lambda x: is_black(x))))))"
+    },
+    "2638": {
+        "sentence": "None of the black squares are touching any edge",
+        "lf": "All(filter_obj(all_items, lambda x: is_black(x) and is_square(x)), lambda x: not is_touching_wall(x, side=Side.ANY))"
+    },
+    "98": {
+        "sentence": "There are 2 yellow circles",
+        "lf": "count(filter_obj(all_items, lambda x: is_yellow(x) and is_circle(x))) == 2"
+    },
+    "143": {
+        "sentence": "There is a box that has one square and circle that are yellow.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_obj(x.all_items_in_box(), lambda y: is_square(y) and is_yellow(y))) == 1 and count(filter_obj(x.all_items_in_box(), lambda y: is_circle(y) and is_yellow(y))) == 1))"
+    },
+    "193": {
+        "sentence": "there is one black triangle touching the base",
+        "lf": "count(filter_obj(all_items, lambda x: is_black(x) and is_triangle(x) and is_touching_wall(x, Side.BOTTOM))) == 1"
+    },
+    "219": {
+        "sentence": "there is exactly one square touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: is_square(x) and is_touching_wall(x))) == 1"
+    },
+    "227": {
+        "sentence": "There is no yellow square closely touching the bottom of a box.",
+        "lf": "not(exist(filter_obj(all_items, lambda x: is_yellow(x) and is_square(x) and is_closely_touching_wall(x, Side.BOTTOM))))"
+    },
+    "292": {
+        "sentence": "There is exactly one yellow item closely touching the bottom of a box.",
+        "lf": "count(filter_obj(all_items, lambda x: is_yellow(x) and is_closely_touching_wall(x, Side.BOTTOM))) == 1"
+    },
+    "293": {
+        "sentence": "There are 2 boxes with 1 yellow triangle",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_triangle(y))) == 1)) == 2"
+    },
+    "294": {
+        "sentence": "There is a box with 3 items at most of which 2 are yellow.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) <= 3 and count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 2))"
+    },
+    "355": {
+        "sentence": "there is exactly one blue triangle touching the bottom base",
+        "lf": "count(filter_obj(all_items, lambda x: is_blue(x) and is_triangle(x) and is_touching_wall(x, Side.BOTTOM))) == 1"
+    },
+    "533": {
+        "sentence": "There is a black item touching the corner.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_black(x), is_touching_corner(x))))"
+    },
+    "556": {
+        "sentence": "There is at least one blue item closely touching right wall of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(is_blue(x), is_closely_touching_wall(x, Side.RIGHT))))"
+    },
+    "615": {
+        "sentence": "There is a box with a black triangle and two blue triangles.",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_obj(x.all_items_in_box(), lambda x: AND(is_black(x), is_triangle(x)))) == 1 and count(filter_obj(x.all_items_in_box(), lambda x: AND(is_blue(x), is_triangle(x)))) == 2)) == 1"
+    },
+    "632": {
+        "sentence": "There is 1 yellow triangle",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_triangle(x), is_yellow(x)))) == 1"
+    },
+    "656": {
+        "sentence": "There are 3 blue items",
+        "lf": "count(filter_color(all_items, Color.BLUE)) == 3"
+    },
+    "725": {
+        "sentence": "There is at least one circle closely touching a corner of a box.",
+        "lf": "ge(count(filter_obj(all_items, lambda x: is_circle(x) and is_closely_touching_corner(x))), 1)"
+    },
+    "802": {
+        "sentence": "One of the grey box contains less than three objects",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: lt(count(x.all_items_in_box()), 3))), 1)"
+    },
+    "873": {
+        "sentence": "one of the grey squares contains three blue objects",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLUE)) == 3)) == 1"
+    },
+    "879": {
+        "sentence": "There is a box with a yellow triangle and a blue triangle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_yellow(y) and is_triangle(y))) and exist(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_triangle(y)))))"
+    },
+    "975": {
+        "sentence": "there are exactly two blue triangles not touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_triangle(x)), not is_touching_wall(x, Side.ANY)))) == 2"
+    },
+    "1028": {
+        "sentence": "There is a box with at least 2 objects of only yellow color.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.YELLOW)) >= 2))"
+    },
+    "1030": {
+        "sentence": "There is a box with 4 items at most of only 2 colors.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) <= 4 and count(get_set_colors(x.all_items_in_box())) == 2))"
+    },
+    "1077": {
+        "sentence": "there is at least one blue circle touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_circle(x)), is_touching_wall(x)))) >= 1"
+    },
+    "1087": {
+        "sentence": "There is 1 box with only blue and yellow items",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(get_set_colors(x)) == 2 and Color.BLUE in get_set_colors(x) and Color.YELLOW in get_set_colors(x)))"
+    },
+    "1098": {
+        "sentence": "There is a box with 5 items of two different colors.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 5 and count(get_set_colors(x.all_items_in_box())) == 2))"
+    },
+    "1101": {
+        "sentence": "There is at least 1 blue item in every box",
+        "lf": "All(all_boxes, lambda x: ge(count(filter_color(x.all_items_in_box(), Color.BLUE)), 1))"
+    },
+    "1107": {
+        "sentence": "There is 1 box with a triangle in the corner",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_triangle(y) and is_closely_touching_corner(y))))) >= 1"
+    },
+    "1115": {
+        "sentence": "There is a black square closely touching the bottom of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_black(x) and is_square(x) and is_closely_touching_wall(x, Side.BOTTOM)))"
+    },
+    "1161": {
+        "sentence": "There is a box with only yellow items of which one is a triangle.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: All(x.all_items_in_box(), is_yellow) and count(filter_shape(x.all_items_in_box(), Shape.TRIANGLE))))"
+    },
+    "1182": {
+        "sentence": "There are 2 boxes with 2 black items",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLACK)) == 2)) == 2"
+    },
+    "1199": {
+        "sentence": "There is a yellow circle closely touching a corner",
+        "lf": "exist(filter_obj(all_items, lambda x: is_yellow(x) and is_circle(x) and is_closely_touching_corner(x)))"
+    },
+    "1248": {
+        "sentence": "One of the grey box has exactly four objects",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4))"
+    },
+    "1249": {
+        "sentence": "there is exactly one yellow triangle not touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_triangle(x)), not is_touching_wall(x, Side.ANY)))) == 1"
+    },
+    "1305": {
+        "sentence": "There is a box with only 1 item that is now black.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1 and exist(filter_obj(x.all_items_in_box(), lambda x: is_black(x)))))"
+    },
+    "1471": {
+        "sentence": "There is a box with a yellow circle and at least two black items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(exist(filter_obj(x, lambda x: AND(is_yellow(x), is_circle(x)))), count(filter_color(x, Color.BLACK)) >= 2)))"
+    },
+    "1490": {
+        "sentence": "there are at least three yellow squares touching an edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_square(x)), is_touching_wall(x, Side.ANY)))) >= 3"
+    },
+    "1507": {
+        "sentence": "There is 1 box with a black circle and triangle in it",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_circle(y))) and exist(filter_shape(x.all_items_in_box(), Shape.TRIANGLE)))) >= 1"
+    },
+    "1555": {
+        "sentence": "there is at least one black circle touching the edge",
+        "lf": "ge(count(filter_obj(all_items, lambda x: is_black(x) and is_circle(x) and is_touching_wall(x))), 1)"
+    },
+    "1586": {
+        "sentence": "There is 1 black triangle",
+        "lf": "count(filter_obj(all_items, lambda x: is_black(x) and is_triangle(x))) == 1"
+    },
+    "1590": {
+        "sentence": "one of the grey square contains exactly one object",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1)) == 1"
+    },
+    "1642": {
+        "sentence": "There is an object that is almost touching the corner.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_closely_touching_corner(x, Side.ANY)))"
+    },
+    "1688": {
+        "sentence": "There are exactly two black objects touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_black(x), is_touching_wall(x, Side.ANY)))) == 2"
+    },
+    "1690": {
+        "sentence": "There is a blue triangle closely touching the bottom of abox.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_blue(x), is_triangle(x)), is_closely_touching_wall(x, Side.BOTTOM))))"
+    },
+    "1699": {
+        "sentence": "There is 1 blue item closely touching a corner",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_blue(x), is_touching_corner(x, Side.ANY)))) == 1"
+    },
+    "1748": {
+        "sentence": "there is exactly one yellow circle touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_yellow(x), is_circle(x)), is_touching_wall(x, Side.ANY)))) == 1"
+    },
+    "1839": {
+        "sentence": "There is 1 box with 3 circles",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(filter_shape(x.all_items_in_box(), Shape.CIRCLE)) == 3)) == 1"
+    },
+    "1872": {
+        "sentence": "There is a box, which has a black square and a blue item.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda y: is_black(y) and is_square(y))) and exist(filter_color(x.all_items_in_box(), Color.BLUE))))"
+    },
+    "1912": {
+        "sentence": "There are 2 black circles",
+        "lf": "count(filter_obj(all_items, lambda x: is_black(x) and is_circle(x))) == 2"
+    },
+    "1913": {
+        "sentence": "None of the yellow objects are touching the base",
+        "lf": "All(filter_color(all_items, Color.YELLOW), lambda x: NOT(is_touching_wall(x, Side.BOTTOM)))"
+    },
+    "1920": {
+        "sentence": "There is one box with one item",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1))"
+    },
+    "1933": {
+        "sentence": "There is 1 box with 1 item",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1)) == 1"
+    },
+    "1988": {
+        "sentence": "There is a box that has two black items and one blue square.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.BLACK)) == 2 and count(filter_obj(x.all_items_in_box(), lambda y: is_blue(y) and is_square(y))) == 1))"
+    },
+    "1998": {
+        "sentence": "one of the grey square contains exactly two objects",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2)) == 1"
+    },
+    "2002": {
+        "sentence": "There is a box with items of 2 different colors of which 3 are blue.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(get_set_colors(x)) == 2, count(filter_color(x, Color.BLUE)) == 3)))"
+    },
+    "2016": {
+        "sentence": "There is a box with a yellow square touching the wall and two triangles.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(exist(filter_obj(x, lambda x: AND(AND(is_yellow(x), is_square(x)), is_touching_wall(x, Side.ANY)))), count(filter_shape(x, Shape.TRIANGLE)) == 2)))"
+    },
+    "2036": {
+        "sentence": "There is a box with only black items.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: AND(count(get_set_colors(x)) == 1, member_of(Color.BLACK, get_set_colors(x)))))"
+    },
+    "2058": {
+        "sentence": "There is 1 box with exactly 3 items",
+        "lf": "count(filter_obj(all_boxes, lambda x: count(x) == 3)) == 1"
+    },
+    "2130": {
+        "sentence": "There is a box with only 2 items of the same shape.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2 and all_same_shape(x.all_items_in_box())))"
+    },
+    "2156": {
+        "sentence": "there is a blue object touching the edge",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and is_touching_wall(x)))"
+    },
+    "2223": {
+        "sentence": "Each box has at least 1 black item",
+        "lf": "All(all_boxes, lambda x: ge(count(filter_color(x.all_items_in_box(), Color.BLACK)), 1))"
+    },
+    "2234": {
+        "sentence": "There is at least 1 box with 3 yellow items",
+        "lf": "ge(count(filter_obj(all_boxes, lambda x: count(filter_color(x.all_items_in_box(), Color.YELLOW)) == 3)), 1)"
+    },
+    "2238": {
+        "sentence": "there is exactly on black square touching the bottom edge",
+        "lf": "count(filter_obj(all_items, lambda x: is_black(x) and is_square(x) and is_touching_wall(x, Side.BOTTOM))) == 1"
+    },
+    "2255": {
+        "sentence": "There is a box that has only two items that are different in shapes and colors.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 2 and NOT(all_same_shape(x.all_items_in_box())) and NOT(all_same_color(x.all_items_in_box()))))"
+    },
+    "2260": {
+        "sentence": "There is a blue triangle touching the wall.",
+        "lf": "exist(filter_obj(all_items, lambda x: is_blue(x) and is_triangle(x) and is_touching_wall(x)))"
+    },
+    "2266": {
+        "sentence": "there is exactly one black square touching the base",
+        "lf": "count(filter_obj(all_items, lambda x: is_black(x) and is_square(x) and is_touching_wall(x, Side.BOTTOM))) == 1"
+    },
+    "2284": {
+        "sentence": "There is a circle touching the edge",
+        "lf": "exist(filter_obj(all_items, lambda x: is_circle(x) and is_touching_wall(x)))"
+    },
+    "2326": {
+        "sentence": "There is 1 blue circle and 1 yellow circle",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_blue(x), is_circle(x)))) == 1 and count(filter_obj(all_items, lambda x: AND(is_yellow(x), is_circle(x)))) == 1"
+    },
+    "2329": {
+        "sentence": "there are at least two black objects not touching any edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND( is_black(x), NOT(is_touching_wall(x))))) >= 2"
+    },
+    "2330": {
+        "sentence": "None of the blue objects are touching the edge",
+        "lf": "All(filter_color(all_items, Color.BLUE), lambda x: NOT(is_touching_wall(x)))"
+    },
+    "2339": {
+        "sentence": "There are 3 yellow items",
+        "lf": "count(filter_color(all_items, Color.YELLOW)) == 3"
+    },
+    "2340": {
+        "sentence": "There is a box with seven item and three of the items that are the same shape are touching the side.",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 7 and all_same_shape(filter_obj(x.all_items_in_box(), lambda x: is_touching_wall(x)))))"
+    },
+    "2364": {
+        "sentence": "there are exactly two triangles touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_triangle(x), is_touching_wall(x)))) == 2"
+    },
+    "2382": {
+        "sentence": "There is exactly one yellow object touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND( is_yellow(x), is_touching_wall(x)))) == 1"
+    },
+    "2418": {
+        "sentence": "There is at least one black circle closely touching the bottom of a box.",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_circle(x)), is_closely_touching_wall(x, Side.BOTTOM))))"
+    },
+    "2457": {
+        "sentence": "Two boxes has tow and three items each.",
+        "lf": "AND(count(filter_obj(all_boxes, lambda x: count(x) == 2)) == 1, count(filter_obj(all_boxes, lambda x: count(x) == 3)) == 1)"
+    },
+    "2483": {
+        "sentence": "There is a black triangle touching the base",
+        "lf": "exist(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_triangle(x)), is_touching_wall(x, Side.BOTTOM))))"
+    },
+    "2512": {
+        "sentence": "one of the grey box contains exactly one object",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 1))"
+    },
+    "2526": {
+        "sentence": "Each grey square has at least one  object touching the bottom edge",
+        "lf": "count(filter_obj(all_boxes, lambda x: exist(filter_obj(x.all_items_in_box(), lambda x: is_touching_wall(x, Side.BOTTOM))))) == 3"
+    },
+    "2534": {
+        "sentence": "one of the grey square has exactly four objects",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(x.all_items_in_box()) == 4))"
+    },
+    "2613": {
+        "sentence": "there is exactly one black square touching the edge",
+        "lf": "count(filter_obj(all_items, lambda x: AND(AND(is_black(x), is_square(x)), is_touching_wall(x, Side.ANY)))) == 1"
+    },
+    "2620": {
+        "sentence": "one of the grey square contains four black objects",
+        "lf": "exist(filter_obj(all_boxes, lambda x: count(filter_obj(x.all_items_in_box(), lambda x: is_black(x))) == 4))"
+    },
+    "2659": {
+        "sentence": "There are three squares closely touching the bottom of a box.",
+        "lf": "count(filter_obj(all_items, lambda x: AND(is_square(x), is_closely_touching_wall(x, Side.BOTTOM)))) == 3"
+    }
+}

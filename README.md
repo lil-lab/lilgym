@@ -31,7 +31,7 @@ ScatterScratch (left), ScatterFlipIt (right)
 
 ## Data
 
-The data and details can be found in: `lilgym/data/`.
+The [data and details](https://github.com/lil-lab/lilgym/tree/main/lilgym/data) can be found in: `lilgym/data/`.
 
 A description can be found in [lilGym: Natural Language Visual Reasoning with Reinforcement Learning](https://arxiv.org/abs/2211.01994). The data is based on the [Cornell Natural Language Visual Reasoning (NLVR) Corpus v1.0 (Suhr et al. 2017)](https://aclanthology.org/P17-2034/) corpus.
 

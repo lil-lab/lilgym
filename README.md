@@ -67,10 +67,8 @@ Following is a short demo script:
 
 ```python
 import gym
-from lilgym.data.utils import get_data
 
-data = get_data('tower', 'scratch', 'train')
-env = gym.make("TowerScratch-v0", data=data, stop_forcing=False)
+env = gym.make("TowerScratch-v0", split="train", stop_forcing=False)
 
 env.seed(1)
 observation = env.reset()
@@ -83,24 +81,43 @@ for _ in range(100):
         observation = env.reset()
 ```
 
-There are four configurations: `TowerScratch`, `TowerFlipIt`, `ScatterScratch` and `ScatterFlipIt`. 
+**Configurations**
 
-An example for each is given below:
+There are four configurations: `TowerScratch`, `TowerFlipIt`, `ScatterScratch` and `ScatterFlipIt`. Examples:
 
 ```python
-data = get_data('tower', 'flipit', 'train')
-env = gym.make("TowerFlipIt-v0", data=data, stop_forcing=False)
+env = gym.make("TowerFlipIt-v0", split="train", stop_forcing=False)
 
-data = get_data('scatter', 'scratch', 'train')
-env = gym.make("ScatterScratch-v0", data=data, stop_forcing=False)
+env = gym.make("ScatterScratch-v0", split="dev", stop_forcing=False)
 
-data = get_data('scatter', 'flipit', 'train')
-env = gym.make("ScatterFlipIt-v0", data=data, stop_forcing=False)
+env = gym.make("ScatterFlipIt-v0", split="test", stop_forcing=False)
 ```
 
-There are three data splits for each configuration (i.e. `TowerScratch`, `TowerFlipIt`, `ScatterScratch` or `ScatterFlipIt`): `train`, `dev`, and `test`.
+**Data splits**
 
-The option `stop_forcing` specifies whether to use the training algorithm with stop forcing. Inference is always done without stop forcing.
+There are three data splits for each configuration: `train`, `dev`, and `test`.
+
+**Stop forcing**
+
+`stop_forcing` specifies whether to use the algorithm with stop forcing at training time. Inference is always done without stop forcing.
+
+**Data reading**
+
+There are two ways to load data:
+
+1. Using the argument `split` as above
+
+2. Using the argument `data`. An example:
+
+```python
+import gym
+from lilgym.data.utils import get_data
+
+data = get_data('tower', 'scratch', 'train')
+env = gym.make("TowerScratch-v0", data=data, stop_forcing=True)
+```
+
+More details about the environment can be found in: `lilgym/envs/README.md`.
 
 The baselines with the training and inference code will also be soon released.
 

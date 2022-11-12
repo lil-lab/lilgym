@@ -5,6 +5,7 @@ from lilgym.envs.utils_image import (
     can_draw_item_scatter,
     can_delete_item_scatter,
     get_box,
+    convert_action_to_img_coordinates,
 )
 
 from lilgym.envs.logical_forms import *
@@ -55,11 +56,11 @@ def compute_prediction(img_struct: List, expression: str):
     return result
 
 
-def get_action_space(env_opt: str):
+def get_action_space(env_opt: str, seed: int = 1):
     if env_opt == "tower":
-        return TowerActionSpace()
+        return TowerActionSpace(seed=seed)
     elif env_opt == "scatter":
-        return ScatterActionSpace()
+        return ScatterActionSpace(seed=seed)
 
 
 def is_terminal(action, time_step: int, horizon: int, force_stop: bool = False):
@@ -115,8 +116,7 @@ def is_action_valid(env_opt: str, img_struct: List, action):
         x, y = action.x(), action.y()
         if is_remove(action):
             x, y = action.x(), action.y()
-            img_x = x * 20 - box * BOX_SIZE - box * SEP_WIDTH
-            img_y = y * (100 / 5)
+            img_x, img_y = convert_action_to_img_coordinates(x, y, box)
             return any(
                 el["x_loc"] == img_x and el["y_loc"] == img_y for el in img_struct[box]
             )
@@ -125,8 +125,7 @@ def is_action_valid(env_opt: str, img_struct: List, action):
         # i.e.: add a 30x30px (large) object in a 20x20px cell, at the right/bottom of a box
         if is_add(action):
             size = action.size()
-            img_x = x * 20 - box * BOX_SIZE - box * SEP_WIDTH
-            img_y = y * (100 / 5)
+            img_x, img_y = convert_action_to_img_coordinates(x, y, box)
             if size == 2 and (img_x == 80 or img_y == 80):
                 return False
 

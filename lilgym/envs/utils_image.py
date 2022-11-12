@@ -19,13 +19,23 @@ SEP_WIDTH = 40
 
 OVERLAP_THRES = 0.5
 
+# Size of 1 cell within the Scatter grid approximation
+# 380px is the width of the original image, divided into 19 cells (number of choices for action x)
+# 100px is the height of the original RGB image, divided into 5 cells (number of choices for action y)
+CELL_SIZE = 20  # = 380 / 19 or 100 / 5
 
-def draw_on_img(img, img_struct, img_struct_for_delete=None):
+
+def draw_on_img(img, img_struct):
     """
     Draw the objects in the boxes on the PIL image.
+
+    Args:
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+    
+    Returns:
+        img (PIL Image): modified image
     """
-    if img_struct_for_delete:
-        img_struct = img_struct_for_delete
     boxes = []
     for box in img_struct:
         new_box = []
@@ -70,6 +80,15 @@ def draw_item_tower(action, img, img_struct):
     """
     Add an item according to a TowerAdd action to the PIL image,
     and to the structured representation of the image.
+
+    Args:
+        action (Type[Action])
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+    
+    Returns:
+        img_struct (Dict[Dict[Dict]]): img_struct with item drawn (added)
+        img (PIL Image)
     """
     box = action.box()
     color = action.color()
@@ -106,6 +125,15 @@ def delete_item_tower(action, img, img_struct):
     """
     Remove an item according to a TowerRemove action from the PIL image,
     and from the structured representation of the image.
+
+    Args:
+        action (Type[Action])
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+    
+    Returns:
+        img_struct (Dict[Dict[Dict]]): img_struct with item deleted
+        img (PIL Image)
     """
     box = action.box()
 
@@ -137,7 +165,7 @@ def delete_item_tower(action, img, img_struct):
     img_struct[box].pop()
     img_struct_for_delete[box].append(item_to_modify)
 
-    return img_struct, draw_on_img(img, img_struct, img_struct_for_delete)
+    return img_struct, draw_on_img(img, img_struct_for_delete)
 
 
 def get_base_image():
@@ -168,30 +196,63 @@ def get_base_image():
 # Below are the functions used for Scatter only
 
 
-def get_item_for_delete_scatter(action, img, img_struct, cell_size=20):
+def convert_action_to_img_coordinates(x, y, box):
+    """
+    Convert (x, y) from the action to the coordinates on the RGB image.
+
+    (cf. `lilgym/envs/README.md` section "Example of a Scatter grid" for example)
+    """
+    x = x * 20 - box * BOX_SIZE - box * SEP_WIDTH
+    y = y * (100 / 5)
+    return x, y
+
+
+def get_item_for_delete_scatter(action, img, img_struct):
     """
     Extract the information of the item to be deleted from the action,
     and convert to the format used to change the image representations.
+
+    Args:
+        action (Type[Action])
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+    
+    Returns:
+        img_x (int): x-coordinate (in terms of pixels) on the RGB image
+        img_y (int)
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+        box (int): the box the item is in
+        box_to_modify (List[Dict]): structured representation of the box
+        to modify
     """
     x, y = action.x(), action.y()
     box = get_box(x)
-    x = x * 20 - box * BOX_SIZE - box * SEP_WIDTH
-    y = y * (100 / 5)
+    img_x, img_y = convert_action_to_img_coordinates(x, y, box)
 
     x_offset = int(BOX_SIZE * box) + SEP_WIDTH * box
 
     # Find the box
     box_to_modify = img_struct[box]
-    return x, y, x_offset, box, box_to_modify
+    return img_x, img_y, x_offset, box, box_to_modify
 
 
-def can_delete_item_scatter(action, img, img_struct, cell_size=20):
+def can_delete_item_scatter(action, img, img_struct, cell_size=CELL_SIZE):
     """
     Check if the item specified by the action can be deleted (e.g.
     there exist an item on the image that can be removed).
+
+    Args:
+        action (Type[Action])
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+        cell_size (int)
+    
+    Returns:
+        (bool)
     """
     x, y, x_offset, box, box_to_modify = get_item_for_delete_scatter(
-        action, img, img_struct, cell_size=cell_size
+        action, img, img_struct
     )
 
     # If there's no element in the box, REMOVE is invalid
@@ -207,14 +268,24 @@ def can_delete_item_scatter(action, img, img_struct, cell_size=20):
     return True
 
 
-def delete_item_scatter(action, img, img_struct, cell_size=20):
+def delete_item_scatter(action, img, img_struct, cell_size=CELL_SIZE):
     """
     (Try to) Delete an item specified by the action, on both
     the structured representation and the PILImage representation of
     the image.
+
+    Args:
+        action (Type[Action])
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+        cell_size (int)
+    
+    Returns:
+        img_struct (Dict[Dict[Dict]]): modified structured representation
+        img (PIL Image)
     """
     x, y, x_offset, box, box_to_modify = get_item_for_delete_scatter(
-        action, img, img_struct, cell_size=cell_size
+        action, img, img_struct
     )
 
     # Check if there's element / get the last element
@@ -235,13 +306,25 @@ def delete_item_scatter(action, img, img_struct, cell_size=20):
         item_to_modify["color"] = curr_color
         del img_struct[box][item_to_modify_idx]
         img_struct_for_delete[box].append(item_to_modify)
-    return img_struct, draw_on_img(img, img_struct, img_struct_for_delete)
+    return img_struct, draw_on_img(img, img_struct_for_delete)
 
 
-def get_item_for_draw_scatter(action, img, img_struct, cell_size=20):
+def get_item_for_draw_scatter(action, img, img_struct):
     """
     Extract the information of the item to be added from the action,
     and convert to the format used to change the image representations.
+
+    Args:
+        action (Type[Action])
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+    
+    Returns:
+        curr_obj (Dict): structured representation of the item
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+        box (int): the box the item is in
+        shapes_in_box (List[shapely.geometry.BaseGeometry]): list of shapes in the current box
     """
     x, y, shape, color, size = (
         action.x(),
@@ -251,16 +334,15 @@ def get_item_for_draw_scatter(action, img, img_struct, cell_size=20):
         action.size(),
     )
     box = get_box(x)
-    x = x * 20 - box * BOX_SIZE - box * SEP_WIDTH
-    y = y * (100 / 5)
+    img_x, img_y = convert_action_to_img_coordinates(x, y, box)
 
     curr_size = Size.int_to_size(size)
     curr_type = Shape.int_to_shape(shape)
     curr_color = Color.int_to_color(color)
 
     curr_obj = {
-        "x_loc": x,
-        "y_loc": y,
+        "x_loc": img_x,
+        "y_loc": img_y,
         "type": curr_type,
         "color": curr_color,
         "size": curr_size,
@@ -276,18 +358,25 @@ def get_item_for_draw_scatter(action, img, img_struct, cell_size=20):
     return curr_obj, x_offset, box, shapes_in_box
 
 
-def can_draw_item_scatter(action, img, img_struct, cell_size=20):
+def can_draw_item_scatter(action, img, img_struct, cell_size=CELL_SIZE):
     """
     Check if the item specified by the action can be added (e.g.
     there is no overlapping with an existing item).
+
+    Args:
+        action (Type[Action])
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+        cell_size (int)
+    
+    Returns:
+        (bool)
     """
     curr_obj, x_offset, box, shapes_in_box = get_item_for_draw_scatter(
-        action, img, img_struct, cell_size
+        action, img, img_struct
     )
 
-    valid, conflict_items = check_intersect(
-        cell_size, shapes_in_box, curr_obj, x_offset
-    )
+    valid, conflict_items = check_intersect(shapes_in_box, curr_obj, x_offset)
 
     if not valid:
         return False
@@ -302,20 +391,28 @@ def can_draw_item_scatter(action, img, img_struct, cell_size=20):
     return True
 
 
-def draw_item_scatter(action, img, img_struct, cell_size=20):
+def draw_item_scatter(action, img, img_struct, cell_size=CELL_SIZE):
     """
     (Try to) Draw an item specified by the action, on both
     the structured representation and the PILImage representation of
     the image.
+
+    Args:
+        action (Type[Action])
+        img (PIL Image): image to be modified
+        img_struct (Dict[Dict[Dict]]): structured representation of img
+        cell_size (int)
+    
+    Returns:
+        img_struct (Dict[Dict[Dict]]): modified structured representation
+        img (PIL Image)
     """
     curr_obj, x_offset, box, shapes_in_box = get_item_for_draw_scatter(
-        action, img, img_struct, cell_size
+        action, img, img_struct
     )
 
     # If the shape can be drew without affecting other existing shapes, just draw it
-    valid, conflict_items = check_intersect(
-        cell_size, shapes_in_box, curr_obj, x_offset
-    )
+    valid, conflict_items = check_intersect(shapes_in_box, curr_obj, x_offset)
 
     # Ex: drawing a shape over the box
     if not valid:
@@ -332,7 +429,7 @@ def draw_item_scatter(action, img, img_struct, cell_size=20):
 
     # "Sticky": If the shape is very close to an existing one, stick both
     curr_shape, closest_shape, closest_i, closest_distance = check_closeness(
-        cell_size, box, shapes_in_box, curr_obj, x_offset
+        box, shapes_in_box, curr_obj, x_offset
     )
     if closest_shape:
         curr_obj = make_sticky(curr_obj, curr_shape, closest_shape, x_offset)
@@ -341,9 +438,15 @@ def draw_item_scatter(action, img, img_struct, cell_size=20):
     return img_struct, draw_on_img(img, img_struct)
 
 
-def get_box(x, cell_size=20):
+def get_box(x, cell_size=CELL_SIZE):
     """
     Get the box number (0 = left, 1 = middle, 2 = right) according to x.
+
+    Args:
+        x: x-coordinate (in terms of pixel) of the item on the RGB image
+    
+    Returns:
+        box (int): the box in which the item is in
     """
     if 0 < x <= BOX_SIZE / cell_size:
         return 0
@@ -361,11 +464,24 @@ def get_drawing_coordinates(cell_size, box_nb, shapes_in_box, curr_obj, x_offset
     """
     If there are conflicting items in the cell, try to find a place in the cell 
     where the shape can fit.
+
+    Args:
+        cell_size (int)
+        box_nb (int)
+        shapes_in_box (List[shapely.geometry.BaseGeometry]): list of shapes in the current box
+        curr_obj (Dict)
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+    
+    Returns:
+        curr_obj (Dict): modified curr_obj
+        possible_starting_coordinates (bool): whether there exist a place where curr_obj
+        can be placed
     """
     possible_starting_coordinates = False
 
     # 100 is the border of the box
-    height = 100
+    height = BOX_SIZE
     width = box_nb * BOX_SIZE + (box_nb - 1) * SEP_WIDTH
 
     # Get curr obj
@@ -409,7 +525,6 @@ def get_drawing_coordinates(cell_size, box_nb, shapes_in_box, curr_obj, x_offset
 
 
 def check_closeness(
-    cell_size,
     box_nb,
     shapes_in_box,
     curr_obj,
@@ -419,6 +534,21 @@ def check_closeness(
 ):
     """
     Check if curr_obj is close enough (given a threshold) to any other objects.
+
+    Args:
+        box_nb (int)
+        shapes_in_box (List[shapely.geometry.BaseGeometry]): list of shapes in the current box
+        curr_obj (Dict)
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+        up_thres (int)
+        low_thres (int)
+    
+    Returns:
+        curr_shape (shapely.geometry.BaseGeometry): curr_obj under the shapely representation
+        closest_shape (shapely.geometry.BaseGeometry): closest item to curr_obj
+        closest_i (int): position of closest_shape in shapes_in_box
+        closest_distance (int)
     """
     closest_shape = None
     closest_distance = 200
@@ -436,9 +566,7 @@ def check_closeness(
     closest_i = -1
     closest_distance = BOX_SIZE
     for i, shape in enumerate(shapes_in_box):
-        _d = int(
-            curr_shape.distance(shape)
-        )  # int to avoid diagonal distances
+        _d = int(curr_shape.distance(shape))  # int to avoid diagonal distances
         if low_thres <= _d <= up_thres and _d < closest_distance:
             closest_distance = _d
             closest_shape = shape
@@ -448,7 +576,16 @@ def check_closeness(
 
 def trans_coord(x, closest_nearest_x, curr_nearest_x):
     """
-    Translation of the coordinate.
+    Translation of the coordinate, to make the corresponding item
+    touch the nearest shape.
+
+    Args:
+        x (int): x-coordinate (in terms of pixel) on the RGB image
+        closest_nearest_x (int)
+        curr_nearest_x (int)
+    
+    Returns:
+        (int): the new coordinate for the current item
     """
     if closest_nearest_x == curr_nearest_x:
         return x
@@ -459,6 +596,16 @@ def trans_coord(x, closest_nearest_x, curr_nearest_x):
 def make_sticky(curr_obj, curr_shape, closest_shape, x_offset):
     """
     Heuristics for scatter: ake almost touching objects to touch.
+
+    Args:
+        curr_obj (Dict): structured representation of the current item to modify
+        curr_shape (shapely.geometry.BaseGeometry): shapely representation of curr_obj
+        closest_shape (shapely.geometry.BaseGeometry)
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+
+    Returns:
+        curr_obj (Dict): modified curr_obj
     """
     # Find where should be touching and where to start drawing the current shape.
     nearest = [o for o in nearest_points(curr_shape, closest_shape)]
@@ -471,9 +618,7 @@ def make_sticky(curr_obj, curr_shape, closest_shape, x_offset):
     curr_new_x1 = trans_coord(curr_ini_x1, closest_nearest_x, curr_nearest_x)
     curr_new_y1 = trans_coord(curr_ini_y1, closest_nearest_y, curr_nearest_y)
 
-    curr_obj["x_loc"] = (
-        curr_new_x1 - x_offset
-    )  # x coordinate should be within the box
+    curr_obj["x_loc"] = curr_new_x1 - x_offset  # x coordinate should be within the box
     curr_obj["y_loc"] = curr_new_y1
     return curr_obj
 
@@ -485,6 +630,13 @@ def get_shape(x_loc, y_loc, obj_type, obj_size, x_offset):
     Args:
         x_loc: x_start in the box
         y_loc: y_start in the box
+        obj_type: Shape of the item ("circle", "square", "triangle")
+        obj_size: Size of the item
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+    
+    Returns
+        shape (shapely.geometry.BaseGeometry): shapely representation of the object
     """
     x_start = x_offset + x_loc
     y_start = y_loc
@@ -509,6 +661,15 @@ def get_shape(x_loc, y_loc, obj_type, obj_size, x_offset):
 def get_shapes_in_box(x_offset, items_in_box):
     """
     Get all the shapes within a box.
+
+    Args:
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+        items_in_box (List[Dict]): list of items in the box
+
+    Returns:
+        shapes_in_box (List[shapely.geometry.BaseGeometry]): list of items in the box
+        with the shapely representation
     """
     shapes_in_box = []
     for obj_idx, obj in enumerate(items_in_box):
@@ -518,14 +679,20 @@ def get_shapes_in_box(x_offset, items_in_box):
     return shapes_in_box
 
 
-def check_intersect(cell_size, shapes_in_box, curr_obj, x_offset):
+def check_intersect(shapes_in_box, curr_obj, x_offset):
     """
     Check if there's an intersection between the current item and the items already in the box.
     
     Args:
-        cell_size: size of the grid (ex. for a grid with 10*10 cells, it's 10)
-        shapes_in_box: list of shapes in the box
-        curr_obj: item to be added
+        shapes_in_box (List[shapely.geometry.BaseGeometry]): list of items in the box
+        with the shapely representation
+        curr_obj (Dict): item to be added
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+    
+    Returns:
+        valid (bool): whether it's possible to place the current item
+        conflict_items (List[int]): list of items that would overlap with the current item
     """
     conflict_items = []
     valid = True
@@ -562,8 +729,15 @@ def find_largest_item(x, y, cell_size, x_offset, items_in_box):
     intersecting with the cell.
     
     Args:
-        cell_size: size of the grid (ex. for a grid with 10*10 cells, it's 10)
-        items_in_box: list of shapes in the box
+        x (int): x-coordinate (in terms of pixel) of the current cell on the RGB image
+        y (int): y-coordinate (in terms of pixel) of the current cell on the RGB image
+        cell_size (int)
+        x_offset (int): offset from the leftmost pixel of the image to 
+        the current box
+        items_in_box (List[Dict]): list of items in the box
+    
+    Returns:
+        max_shape_idx (int): index of the largest item overlapping with the cell
     """
 
     # Create the cell object

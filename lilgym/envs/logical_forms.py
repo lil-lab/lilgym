@@ -296,8 +296,7 @@ def equal(a, b):
     b = b if isinstance(b, list) else [b]
     types = [type(x) for x in a] + [type(x) for x in b]
     if count(types) > 1:
-        raise TypeError(
-            "cannot equate types: {0} and {1}".format(types[0], types[1]))
+        raise TypeError("cannot equate types: {0} and {1}".format(types[0], types[1]))
     return equal_set(a, b)
 
 
@@ -340,8 +339,7 @@ def get_touching(s):
 
 def get_closely_touching(s):
     return union_all(
-        __set_per_item_function(
-            s, lambda x: __relate(Relation.CLOSELY_TOUCH, x))
+        __set_per_item_function(s, lambda x: __relate(Relation.CLOSELY_TOUCH, x))
     )
 
 
@@ -359,15 +357,13 @@ def get_box_all_below(s):
 
 def get_img_all_above(s):
     return union_all(
-        __set_per_item_function(
-            s, lambda x: __relate_all_img(Relation.ABOVE, x))
+        __set_per_item_function(s, lambda x: __relate_all_img(Relation.ABOVE, x))
     )
 
 
 def get_img_all_below(s):
     return union_all(
-        __set_per_item_function(
-            s, lambda x: __relate_all_img(Relation.BELOW, x))
+        __set_per_item_function(s, lambda x: __relate_all_img(Relation.BELOW, x))
     )
 
 
@@ -377,15 +373,13 @@ def __relate(rel: Relation, item):
 
 def __relate_all(rel: Relation, item):
     return set(
-        [x for x in get_box_exclusive(
-            item) if __check_relation_all(x, item, rel)]
+        [x for x in get_box_exclusive(item) if __check_relation_all(x, item, rel)]
     )
 
 
 def __relate_all_img(rel: Relation, item):
     return set(
-        [x for x in get_img_exclusive(
-            item) if __check_relation_all(x, item, rel)]
+        [x for x in get_img_exclusive(item) if __check_relation_all(x, item, rel)]
     )
 
 
@@ -572,8 +566,7 @@ def process_token_sequence(token_seq, tokens_mapping):
     token_seq = token_seq.copy()
 
     for idx, token in enumerate(token_seq):
-        n_args = len(
-            tokens_mapping[token].args_types) if token in tokens_mapping else 0
+        n_args = len(tokens_mapping[token].args_types) if token in tokens_mapping else 0
 
         next_ch = ""
         added_chars = ""
@@ -624,8 +617,7 @@ def execute(program_tokens, image, logical_tokens_inventory, sentence=""):
     """
     import sys
 
-    logical_form = process_token_sequence(
-        program_tokens, logical_tokens_inventory)
+    logical_form = process_token_sequence(program_tokens, logical_tokens_inventory)
     if sys.version_info[0] == 3 and sys.version_info[1] >= 5:
         try:
             result = run_logical_form(logical_form, image)

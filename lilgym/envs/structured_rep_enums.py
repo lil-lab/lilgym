@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Classes specifying the properties of the items on the image
 # Based on the code of Weakly Supervised Semantic Parsing with Abstract Examples, Goldman et al., 2019.
+
 
 from enum import Enum
 
@@ -26,6 +28,24 @@ class Size(Enum):
             return 20
         elif number == 2:
             return 30
+
+    @classmethod
+    def int_to_str(cls, number):
+        if number == 0:
+            return "SMALL"
+        elif number == 1:
+            return "MEDIUM"
+        elif number == 2:
+            return "LARGE"
+
+    @classmethod
+    def str_to_int(cls, size: str):
+        if size == "SMALL":
+            return 0
+        elif size == "MEDIUM":
+            return 1
+        elif size == "LARGE":
+            return 2
 
 
 class Color(Enum):
@@ -71,6 +91,24 @@ class Color(Enum):
         elif number == 2:
             return cls.BLUE.value
 
+    @classmethod
+    def int_to_str(cls, number):
+        if number == 0:
+            return "YELLOW"
+        elif number == 1:
+            return "BLACK"
+        elif number == 2:
+            return "BLUE"
+
+    @classmethod
+    def str_to_int(cls, color: str):
+        if color == "YELLOW":
+            return 0
+        elif color == "BLACK":
+            return 1
+        elif color == "BLUE":
+            return 2
+
 
 class Shape(Enum):
     CIRCLE = "circle"
@@ -93,6 +131,48 @@ class Shape(Enum):
             return cls.SQUARE.value
         elif number == 2:
             return cls.TRIANGLE.value
+
+    @classmethod
+    def int_to_str(cls, number):
+        if number == 0:
+            return "CIRCLE"
+        elif number == 1:
+            return "SQUARE"
+        elif number == 2:
+            return "TRIANGLE"
+
+    @classmethod
+    def str_to_int(cls, shape: str):
+        if shape == "CIRCLE":
+            return 0
+        elif shape == "SQUARE":
+            return 1
+        elif shape == "TRIANGLE":
+            return 2
+
+
+class TowerBox(Enum):
+    LEFT = "LEFT"
+    MIDDLE = "MIDDLE"
+    RIGHT = "RIGHT"
+
+    @classmethod
+    def int_to_str(cls, number):
+        if number == 0:
+            return cls.LEFT.value
+        elif number == 1:
+            return cls.MIDDLE.value
+        elif number == 2:
+            return cls.RIGHT.value
+
+    @classmethod
+    def str_to_int(cls, box: str):
+        if box == TowerBox.LEFT.value:
+            return 0
+        elif box == TowerBox.MIDDLE.value:
+            return 1
+        elif box == TowerBox.RIGHT.value:
+            return 2
 
 
 class Location(Enum):

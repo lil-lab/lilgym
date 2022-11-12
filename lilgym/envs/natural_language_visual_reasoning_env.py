@@ -5,9 +5,10 @@ import skimage.measure
 
 import gym
 from gym import spaces
+from gym.utils import seeding
 
+from lilgym.data.utils import get_data
 from lilgym.envs.reward import Reward
-
 from lilgym.envs.utils import (
     is_action_valid,
     get_action_space,
@@ -22,8 +23,11 @@ from lilgym.envs.utils_state import ContextState
 from lilgym.envs.utils_action import (
     to_tower_action,
     to_scatter_action,
-    Stop,
-    get_action_object,
+    Action,
+    TowerStop,
+    ScatterStop,
+    to_action_class,
+    pad_action,
 )
 
 
@@ -36,8 +40,9 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
         self,
         env_opt: str,
         learn_opt: str,
-        data: dict,
         stop_forcing: bool,
+        split: str = None,
+        data: dict = None,
         evaluate: bool = False,
         horizon: int = MAX_TIME_STEPS,
     ):
@@ -45,7 +50,11 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
         Args:
             env_opt: Environment appearance option: "tower" or "scatter"
             learn_opt: The starting condition: "scratch" or "flipit"
+
             data: Dictionary of the context and initial states
+            split: The data split ("train", "dev", or "test").
+            Note: split and data are mutually exclusive, and split is considered in priority.
+
             stop_forcing: Whether stop forcing (SF) is used or not
             evaluate: Whether evaluation mode is on
         """
@@ -72,20 +81,27 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
         )
 
         self._samples = {}
-        if data:
-            for k in data.keys():
-                if self._learn_opt == "scratch":
-                    self._samples[k] = ContextState(
-                        data[k]["sentence"], data[k]["lf"], [[], [], []], True
-                    )
-                elif self._learn_opt == "flipit":
-                    # The target bool will be converted to the inverse
-                    self._samples[k] = ContextState(
-                        data[k]["sentence"],
-                        data[k]["lf"],
-                        data[k]["structured_rep"],
-                        not bool_from_string(data[k]["label"]),
-                    )
+        assert (
+            data or split
+        ), "No data error: Either the split of the data needs to be specified, or the data needs to be given"
+
+        if split:
+            data = get_data(self._env_opt, self._learn_opt, split)
+        assert data is not None, "Must provide environment initial states."
+
+        for k in data.keys():
+            if self._learn_opt == "scratch":
+                self._samples[k] = ContextState(
+                    data[k]["sentence"], data[k]["lf"], [[], [], []], True
+                )
+            elif self._learn_opt == "flipit":
+                # The target bool will be converted to the inverse
+                self._samples[k] = ContextState(
+                    data[k]["sentence"],
+                    data[k]["lf"],
+                    data[k]["structured_rep"],
+                    not bool_from_string(data[k]["label"]),
+                )
 
         self._evaluate = evaluate
         self._evaluate_list = list(self._samples.keys())
@@ -94,11 +110,14 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
 
         self._state = None
 
-    def step(self, in_action):
+    def step(self, action):
         """
         Takes a step with the given action and returns next observation.
         """
-        action = get_action_object(self._env_opt, in_action)
+        # If action is an iterable (ex. np.array or torch.Tensor), convert to an Type[Action] object
+        if not isinstance(action, Action):
+            action = pad_action(action, self._env_opt)
+            action = to_action_class(action)
 
         # increment time step
         self._time_step += 1
@@ -116,7 +135,10 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
                 action, prediction, target_bool=self._state.target_bool
             )
             if force_stop:
-                action = Stop()
+                if self._env_opt == "tower":
+                    action = TowerStop()
+                elif self._env_opt == "scatter":
+                    action = ScatterStop()
                 step_reward = self._reward_function(action, prediction)
 
         # Check if an action is invalid
@@ -200,8 +222,9 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
         self._state.img = img
         return self._state
 
-    def seed(self, seed):
-        np.random.seed(seed)
+    def seed(self, seed=None):
+        self.np_random, seed = seeding.np_random(seed)
+        return seed
 
     def close(self):
         pass

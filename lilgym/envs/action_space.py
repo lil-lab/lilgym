@@ -2,35 +2,40 @@ from typing import List
 import itertools
 import numpy as np
 
-from gym.spaces import Discrete, MultiDiscrete, Tuple
-from lilgym.envs.utils_action import (
-    Stop,
-    TowerAdd,
-    TowerRemove,
-    ScatterAdd,
-    ScatterRemove,
-    to_tower_action,
-    to_scatter_action,
-)
+from gym.spaces.space import Space
+
+from lilgym.envs.action_spaces import TOWER_DEFAULT_ACTIONS, SCATTER_DEFAULT_ACTIONS
 
 
+# Tower actions
+# - 3 choices for action type (STOP, ADD, REMOVE)
+# - 3 choices for box in which to exercise the action (LEFT, MIDDLE, RIGHT)
+# - 3 choices for the item color (YELLOW, BLACK, BLUE)
 TOWER_MULTI = [3, 3, 3]
+
+# Scatter actions (Using the 19x5 grid simplification, with each cell being 20x20px)
+# Coordinates-related arguments:
+# - 19 choices for x on the grid, starting from the left (ex: 0 on the grid refer to
+# the cells where the leftmost pixel is the leftmost pixel on the RGB image, then 1
+# on the grid refer to the cells where the leftmost pixel is the 20th pixel on the
+# RGB image starting from the left, etc.)
+# - 5 choices for y on the grid, starting from the top (ex: 0 on the grid refer to
+# the cells where the top pixel is the top pixel on the RGB image)
+#
+# Items-related arguments:
+# - 3 choices for the item's shape (CIRCLE, SQUARE, TRIANGLE)
+# - 3 choices for the item's color (YELLOW, BLACK, BLUE)
+# - 3 choices for the item's size (SMALL, MEDIUM, LARGE)
 SCATTER_MULTI_COORD = [19, 5]
 SCATTER_MULTI_ITEM = [3, 3, 3]
 SCATTER_MULTI = [3] + SCATTER_MULTI_COORD + SCATTER_MULTI_ITEM
 
 
-class TowerActionSpace:
-    def __init__(self):
-        self._action_space = Tuple(
-            (
-                Discrete(3),  # 3 action types: ADD, REMOVE, STOP
-                Discrete(3),  # 3 choices for box: LEFT, MIDDLE, RIGHT
-                Discrete(3),  # 3 choices for color: YELLOW, BLACK, BLUE
-            )
-        )
+class TowerActionSpace(Space):
+    def __init__(self, seed=None):
+        self._action_space = TOWER_DEFAULT_ACTIONS
         self.actions_dim = TOWER_MULTI
-        self.shape = len(self.actions_dim)
+        super().__init__(shape=[len(self.actions_dim)], seed=seed)
 
     def get_shape(self):
         return self.shape
@@ -39,22 +44,14 @@ class TowerActionSpace:
         return self.actions_dim
 
     def sample(self):
-        return np.asarray(self._action_space.sample())
+        return self.np_random.choice(self._action_space)
 
 
-class ScatterActionSpace:
-    def __init__(self):
-        self._action_space = Tuple(
-            (
-                Discrete(3),  # 3 action types: ADD, REMOVE, STOP
-                MultiDiscrete(SCATTER_MULTI_COORD),  # Number of choices for (x, y)
-                MultiDiscrete(
-                    SCATTER_MULTI_ITEM
-                ),  # Number of choices for (shape, color, size)
-            )
-        )
+class ScatterActionSpace(Space):
+    def __init__(self, seed=None):
+        self._action_space = SCATTER_DEFAULT_ACTIONS
         self.actions_dim = SCATTER_MULTI
-        self.shape = len(self.actions_dim)
+        super().__init__(shape=[len(self.actions_dim)], seed=seed)
 
     def get_shape(self):
         return self.shape
@@ -63,9 +60,4 @@ class ScatterActionSpace:
         return self.actions_dim
 
     def sample(self):
-        t = self._action_space.sample()
-        # Flatten the tuple
-        action_type = np.array([t[0]])
-        action_coord_item = np.array(list(itertools.chain.from_iterable(t[1:])))
-        action = np.concatenate((action_type, action_coord_item), axis=0)
-        return action
+        return self.np_random.choice(self._action_space)

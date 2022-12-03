@@ -37,11 +37,11 @@ There are two ways to load data:
 2. Using the argument `data`, with an example:
 
 ```python
-import gym
+import gymnasium as gym
 from lilgym.data.utils import get_data
 
 data = get_data('tower', 'scratch', 'train')
-env = gym.make("TowerScratch-v0", data=data, stop_forcing=True)
+env = gym.make("TowerScratch-v0", data=data, stop_forcing=True, disable_env_checker=True)
 ```
 
 ### Action representations

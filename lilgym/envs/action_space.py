@@ -2,7 +2,7 @@ from typing import List
 import itertools
 import numpy as np
 
-from gym.spaces.space import Space
+from gymnasium.spaces.space import Space
 
 from lilgym.envs.action_spaces import TOWER_DEFAULT_ACTIONS, SCATTER_DEFAULT_ACTIONS
 

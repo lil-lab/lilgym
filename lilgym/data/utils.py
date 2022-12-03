@@ -29,10 +29,10 @@ data_files = {
 }
 
 
-def get_data(env_opt, learn_opt, split):
-    env_name = f'{env_opt}-{learn_opt}'
+def get_data(appearance, starting_condition, split):
+    env_name = f'{appearance}-{starting_condition}'
     if env_name not in data_files.keys():
-        raise Exception("Data not found. Please check the spelling of env_opt/learn_opt, or data file names/paths.")
+        raise Exception("Data not found. Please check the spelling of appearance/starting_condition, or data file names/paths.")
     with open(os.path.join(data_path, data_files[env_name][split]), "r") as f:
         data = json.load(f)
     return data

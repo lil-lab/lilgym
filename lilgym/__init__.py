@@ -1,12 +1,12 @@
-from gym.envs.registration import register
+from gymnasium.envs.registration import register
 
 
 register(
     id='TowerScratch-v0',
     entry_point='lilgym.envs:NaturalLanguageVisualReasoningEnv',
     kwargs={
-        'env_opt': 'tower',
-        'learn_opt': 'scratch',
+        'appearance': 'tower',
+        'starting_condition': 'scratch',
     },
 )
 
@@ -14,8 +14,8 @@ register(
     id='TowerFlipIt-v0',
     entry_point='lilgym.envs:NaturalLanguageVisualReasoningEnv',
     kwargs={
-        'env_opt': 'tower',
-        'learn_opt': 'flipit',
+        'appearance': 'tower',
+        'starting_condition': 'flipit',
     },
 )
 
@@ -23,8 +23,8 @@ register(
     id='ScatterScratch-v0',
     entry_point='lilgym.envs:NaturalLanguageVisualReasoningEnv',
     kwargs={
-        'env_opt': 'scatter',
-        'learn_opt': 'scratch',
+        'appearance': 'scatter',
+        'starting_condition': 'scratch',
     },
 )
 
@@ -32,7 +32,7 @@ register(
     id='ScatterFlipIt-v0',
     entry_point='lilgym.envs:NaturalLanguageVisualReasoningEnv',
     kwargs={
-        'env_opt': 'scatter',
-        'learn_opt': 'flipit',
+        'appearance': 'scatter',
+        'starting_condition': 'flipit',
     },
 )

@@ -1,11 +1,12 @@
 import time, copy
-import numpy as np
+from typing import Optional
 
+import numpy as np
 import skimage.measure
 
-import gym
-from gym import spaces
-from gym.utils import seeding
+import gymnasium as gym
+from gymnasium import spaces
+from gymnasium.utils import seeding
 
 from lilgym.data.utils import get_data
 from lilgym.envs.reward import Reward
@@ -13,6 +14,7 @@ from lilgym.envs.utils import (
     is_action_valid,
     get_action_space,
     is_terminal,
+    is_truncated,
     compute_prediction,
     bool_from_string,
     can_force_stop,
@@ -38,8 +40,8 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
 
     def __init__(
         self,
-        env_opt: str,
-        learn_opt: str,
+        appearance: str,
+        starting_condition: str,
         stop_forcing: bool,
         split: str = None,
         data: dict = None,
@@ -48,8 +50,8 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
     ):
         """
         Args:
-            env_opt: Environment appearance option: "tower" or "scatter"
-            learn_opt: The starting condition: "scratch" or "flipit"
+            appearance: Environment appearance option: "tower" or "scatter"
+            starting_condition: The starting condition: "scratch" or "flipit"
 
             data: Dictionary of the context and initial states
             split: The data split ("train", "dev", or "test").
@@ -58,14 +60,16 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
             stop_forcing: Whether stop forcing (SF) is used or not
             evaluate: Whether evaluation mode is on
         """
-        print(f"{env_opt}-{learn_opt}-SF{stop_forcing} Environment initialized")
+        print(
+            f"{appearance}-{starting_condition}-StopForcing-{stop_forcing} Environment initialized"
+        )
 
-        self._env_opt = env_opt
-        self._learn_opt = learn_opt
+        self._appearance = appearance
+        self._starting_condition = starting_condition
         self._stop_forcing = stop_forcing
         self._horizon = horizon
 
-        self.action_space = get_action_space(self._env_opt)
+        self.action_space = get_action_space(self._appearance)
 
         self._resize_width = 190
         self._resize_height = 50
@@ -73,9 +77,12 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
         self.observation_space = spaces.Dict(
             {
                 "image": spaces.Box(
-                    low=0, high=255, shape=(self._resize_height, self._resize_width, 3)
+                    low=0,
+                    high=255,
+                    shape=(self._resize_height, self._resize_width, 3),
+                    dtype=np.uint8,
                 ),
-                "sentence": spaces.Discrete(320),
+                "sentence": spaces.Text(max_length=320),
                 "target": spaces.Discrete(2),
             }
         )
@@ -86,15 +93,15 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
         ), "No data error: Either the split of the data needs to be specified, or the data needs to be given"
 
         if split:
-            data = get_data(self._env_opt, self._learn_opt, split)
+            data = get_data(self._appearance, self._starting_condition, split)
         assert data is not None, "Must provide environment initial states."
 
         for k in data.keys():
-            if self._learn_opt == "scratch":
+            if self._starting_condition == "scratch":
                 self._samples[k] = ContextState(
                     data[k]["sentence"], data[k]["lf"], [[], [], []], True
                 )
-            elif self._learn_opt == "flipit":
+            elif self._starting_condition == "flipit":
                 # The target bool will be converted to the inverse
                 self._samples[k] = ContextState(
                     data[k]["sentence"],
@@ -116,13 +123,12 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
         """
         # If action is an iterable (ex. np.array or torch.Tensor), convert to an Type[Action] object
         if not isinstance(action, Action):
-            action = pad_action(action, self._env_opt)
+            action = pad_action(action, self._appearance)
             action = to_action_class(action)
 
-        # increment time step
         self._time_step += 1
 
-        # compute reward
+        # Compute reward
         prediction = False
         if self._state.img_struct:  # if the image is not empty
             prediction = compute_prediction(self._state.img_struct, self._state.lf)
@@ -135,20 +141,23 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
                 action, prediction, target_bool=self._state.target_bool
             )
             if force_stop:
-                if self._env_opt == "tower":
+                if self._appearance == "tower":
                     action = TowerStop()
-                elif self._env_opt == "scatter":
+                elif self._appearance == "scatter":
                     action = ScatterStop()
                 step_reward = self._reward_function(action, prediction)
 
+        # Check if the timelimit (truncation condition) is met
+        truncated = is_truncated(self._time_step, self._horizon)
+
         # Check if an action is invalid
-        if not is_action_valid(self._env_opt, self._state.img_struct, action):
-            force_stop = True
+        if not is_action_valid(self._appearance, self._state.img_struct, action):
+            truncated = True
             step_reward = -1.0
 
-        done = is_terminal(action, self._time_step, self._horizon, force_stop)
+        terminated = is_terminal(action, force_stop)
 
-        if not done:
+        if not terminated and not truncated:
             # Image drawing / img_struct updating
             self._state = action.apply(self._state)
 
@@ -157,42 +166,37 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
             "target": self._state.target_bool,
             "force_stop": force_stop,
         }
-        if done:
+        if terminated or truncated:
             info["accuracy"] = (step_reward > 0.0) * 1.0
             info["accuracy_nosf"] = ((step_reward > 0.0) and not force_stop) * 1.0
 
         if self._evaluate:
             info["nb_to_evaluate"] = len(self._evaluate_list)
 
-        return self._get_dict_obs(copy.deepcopy(self._state)), step_reward, done, info
+        return (
+            self._get_dict_obs(copy.deepcopy(self._state)),
+            step_reward,
+            terminated,
+            truncated,
+            info,
+        )
 
     def _get_dict_obs(self, _state: ContextState):
-        img = np.array(_state.img)
+        img = np.array(_state.img, dtype=np.uint8)
 
-        image = np.zeros((50, self._resize_width, 3))
+        image = np.zeros((self._resize_height, self._resize_width, 3), dtype=np.uint8)
         image[:, :, :] = skimage.measure.block_reduce(img, (2, 2, 1), np.mean)
 
         return {
             "sentence": _state.sentence,
             "image": image,
-            "target": 1 if self._learn_opt == "scratch" else int(_state.target_bool),
+            "target": 1 if self._starting_condition == "scratch" else int(_state.target_bool),
         }
 
-    def _combine_sent_n_img(self, _state: ContextState):
-        img = np.array(_state.img)
-
-        state = np.zeros((51, self._resize_width, 3))
-        state[:50, :, :] = skimage.measure.block_reduce(img, (2, 2, 1), np.mean)
-
-        sent_embedding = np.zeros((self._resize_width, 3))
-        sent_embedding[:, 0] = _state.embedding
-
-        state[-1] = sent_embedding
-        return state
-
-    def reset(self, example_number=None):
-        if example_number:
-            return self.reset_example(example_number)
+    def reset(self, options: Optional[dict] = None):
+        if options:
+            example_number = options["example_number"]
+            return self.reset_example(example_number), {}
 
         if self._evaluate:
             item = self._evaluate_list.pop()
@@ -201,7 +205,7 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
             self._state = self.reset_example(
                 list(self._samples.keys())[np.random.choice(len(self._samples))]
             )
-        return self._get_dict_obs(self._state)
+        return self._get_dict_obs(self._state), {}
 
     def reset_example(self, example_number):
         """
@@ -216,7 +220,7 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
 
         img, draw = get_base_image()
 
-        if "flipit" in self._learn_opt:
+        if self._starting_condition == "flipit":
             img = draw_on_img(img, self._state.img_struct)
 
         self._state.img = img

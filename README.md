@@ -28,7 +28,6 @@ ScatterScratch (left), ScatterFlipIt (right)
 
 <img src="/media/images/lilgym_gold_scatter_scratch_ex.gif" alt="scatter-scratch" width="300"/> <img src="/media/images/lilgym_gold_scatter_flipit_ex.gif" alt="scatter-flipit" width="300"/>
 
-
 ## Data
 
 The [data and details](https://github.com/lil-lab/lilgym/tree/main/lilgym/data) can be found in: `lilgym/data/`.
@@ -52,6 +51,7 @@ conda activate lilgym
 cd lilgym
 pip install -r requirements.txt
 ```
+Note: the environment is updated to be used with Gymnasium (formerly Gym).
 
 To install the package from source:
 ```
@@ -66,20 +66,22 @@ The environments follow standard Gym API.
 Following is a short demo script:
 
 ```python
-import gym
+import gymnasium as gym
 
-env = gym.make("TowerScratch-v0", split="train", stop_forcing=False)
+env = gym.make("TowerScratch-v0", split="train", stop_forcing=False, disable_env_checker=True)
 
 env.seed(1)
-observation = env.reset()
+observation, info = env.reset()
 
 for _ in range(100):
     action = env.action_space.sample()
-    observation, reward, done, info = env.step(action)
+    observation, reward, terminated, truncated, info = env.step(action)
 
     if done:
-        observation = env.reset()
+        observation, info = env.reset()
 ```
+
+Note: `disable_env_checker` comes with [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) (new Gym), and can be set to `False` if needed.
 
 **Configurations**
 

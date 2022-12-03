@@ -269,26 +269,26 @@ def to_scatter_action(raw_action):
         raise ValueError(f"Invalid action type: {action_type}")
 
 
-def pad_action(action, env_opt):
+def pad_action(action, appearance):
     """
     For a Tower Action, pad to length 3 if it is not already, or
     for a Scatter Action, pad to length 6
     action: an iterable (np.array or Torch Tensor)
     """
-    if env_opt == "tower":  # pad to length 3
+    if appearance == "tower":  # pad to length 3
         if len(action) == 3:
             return action
         if isinstance(action, torch.Tensor):
             action = action.cpu().detach().numpy()
         return np.pad(action, (0, 3 - len(action)), constant_values=(-1,))
-    elif env_opt == "scatter":  # pad to length 6
+    elif appearance == "scatter":  # pad to length 6
         if len(action) == 6:
             return action
         if isinstance(action, torch.Tensor):
             action = action.cpu().detach().numpy()
         return np.pad(action, (0, 6 - len(action)), constant_values=(-1,))
     else:
-        raise ValueError(f"Invalid env_opt: {env_opt}, should be 'tower' or 'scatter'")
+        raise ValueError(f"Invalid appearance: {appearance}, should be 'tower' or 'scatter'")
 
 
 def to_action_class(action):

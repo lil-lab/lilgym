@@ -56,22 +56,28 @@ def compute_prediction(img_struct: List, expression: str):
     return result
 
 
-def get_action_space(env_opt: str, seed: int = 1):
-    if env_opt == "tower":
+def get_action_space(appearance: str, seed: int = 1):
+    if appearance == "tower":
         return TowerActionSpace(seed=seed)
-    elif env_opt == "scatter":
+    elif appearance == "scatter":
         return ScatterActionSpace(seed=seed)
 
 
-def is_terminal(action, time_step: int, horizon: int, force_stop: bool = False):
+def is_terminal(action, force_stop: bool = False):
     """
     Check whether the rollout is reaching an end state, i.e. if:
     - the action taken is Stop
-    - the horizon is reached
     - or we want to do stop forcing
     """
-    terminal = is_stop(action) or (time_step == horizon) or force_stop
-    return terminal
+    return is_stop(action) or force_stop
+
+
+def is_truncated(time_step: int, horizon: int):
+    """
+    Check whether the rollout is reaching a truncation condition i.e. if:
+    - the horizon is reached
+    """
+    return time_step == horizon
 
 
 def can_force_stop(last_action, prediction: bool, target_bool: bool = True):
@@ -82,7 +88,7 @@ def can_force_stop(last_action, prediction: bool, target_bool: bool = True):
     return not is_stop(last_action) and (prediction == target_bool)
 
 
-def is_action_valid(env_opt: str, img_struct: List, action):
+def is_action_valid(appearance: str, img_struct: List, action):
     """
     Check whether an action is valid.
     Returns:
@@ -95,7 +101,7 @@ def is_action_valid(env_opt: str, img_struct: List, action):
     if is_stop(action):
         return True
 
-    if env_opt == "tower":
+    if appearance == "tower":
         box = action.box()
         # Case 1: remove when there's nothing
         if is_remove(action) and len(img_struct[box]) == 0:
@@ -105,7 +111,7 @@ def is_action_valid(env_opt: str, img_struct: List, action):
         if is_add(action) and len(img_struct[box]) == 4:
             return False
         return True
-    elif env_opt == "scatter":
+    elif appearance == "scatter":
         # The case where the action is on the separator
         box = get_box(action.x())
         # x is on the separator

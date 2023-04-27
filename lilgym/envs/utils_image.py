@@ -443,19 +443,19 @@ def get_box(x, cell_size=CELL_SIZE):
     Get the box number (0 = left, 1 = middle, 2 = right) according to x.
 
     Args:
-        x: x-coordinate (in terms of pixel) of the item on the RGB image
+        x: x-coordinate of the item on the RGB image
     
     Returns:
         box (int): the box in which the item is in
     """
-    if 0 < x <= BOX_SIZE / cell_size:
+    if 0 <= x < BOX_SIZE / cell_size:
         return 0
     elif (
-        x > (BOX_SIZE + cell_size * 2) / cell_size
-        and x <= (2 * (BOX_SIZE + cell_size)) / cell_size
+        x >= (BOX_SIZE + cell_size * 2) / cell_size
+        and x < (2 * (BOX_SIZE + cell_size)) / cell_size
     ):
         return 1
-    elif x > (BOX_SIZE * 2 + cell_size * 4) / cell_size:
+    elif x >= (BOX_SIZE * 2 + cell_size * 4) / cell_size:
         return 2
     return -1
 

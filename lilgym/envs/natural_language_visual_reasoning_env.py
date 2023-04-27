@@ -196,7 +196,7 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
     def reset(self, options: Optional[dict] = None):
         if options:
             example_number = options["example_number"]
-            return self.reset_example(example_number), {}
+            return self._get_dict_obs(self.reset_example(example_number)), {}
 
         if self._evaluate:
             item = self._evaluate_list.pop()
@@ -232,3 +232,9 @@ class NaturalLanguageVisualReasoningEnv(gym.Env):
 
     def close(self):
         pass
+
+    def get_samples(self):
+        return self._samples
+
+    def get_state(self):
+        return self._state

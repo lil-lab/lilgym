@@ -1,8 +1,6 @@
 # *lil*Gym: Natural Language Visual Reasoning with Reinforcement Learning
 
-[arXiv](https://arxiv.org/abs/2211.01994) | [code & data](https://github.com/lil-lab/lilgym) | [website](https://lil-lab.github.io/lilgym/)
-
-baselines: coming soon
+[arXiv](https://arxiv.org/abs/2211.01994) | [code & data](https://github.com/lil-lab/lilgym) | [website](https://lil-lab.github.io/lilgym/) | [baselines](https://github.com/lil-lab/lilgym-baselines)
 
 ## Table of Contents
 
@@ -128,13 +126,17 @@ MIT
 
 ## Citation
 ```
-@misc{wu2022lilgym,
-      title={lilGym: Natural Language Visual Reasoning with Reinforcement Learning}, 
-      author={Wu, Anne and Brantley, Kianté and Kojima, Noriyuki and Artzi, Yoav},
-      year={2022},
-      eprint={2211.01994},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
+@inproceedings{wu-etal-2023-lilgym,
+    title = "lil{G}ym: Natural Language Visual Reasoning with Reinforcement Learning",
+    author = "Wu, Anne  and
+      Brantley, Kiante  and
+      Kojima, Noriyuki  and
+      Artzi, Yoav",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    year = "2023",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.acl-long.512",
+    pages = "9214--9234",
 }
 ```
 

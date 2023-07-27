@@ -1,4 +1,7 @@
 from typing import List
+import random
+import numpy as np
+import torch
 
 from lilgym.envs.utils_image import SEP_WIDTH, BOX_SIZE
 from lilgym.envs.utils_image import (
@@ -143,3 +146,9 @@ def is_action_valid(appearance: str, img_struct: List, action):
             if not can_delete_item_scatter(action, None, img_struct):
                 return False
         return True
+
+def set_seeds(random_seed):
+    torch.manual_seed(random_seed)
+    torch.cuda.manual_seed_all(random_seed)
+    np.random.seed(random_seed)
+    random.seed(random_seed)

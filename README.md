@@ -36,11 +36,25 @@ A description can be found in [lilGym: Natural Language Visual Reasoning with Re
 
 ### Installation
 
-1. Create a conda environment (Python >= 3.7)
+Notes: 
+- The codebase has been tested with Python 3.7/3.8, with PyTorch 1.12.1+cu102, CUDA 11.2
+- On-going work for compatibility with higher versions
+
+1. Create a conda environment
+
 ```
 conda create -n lilgym python=3.7
 conda activate lilgym
 ```
+
+Install [PyTorch](https://pytorch.org/get-started/previous-versions/):
+```
+pip install torch==1.12.1+cu102 torchvision==0.13.1+cu102 --extra-index-url https://download.pytorch.org/whl/cu102
+```
+
+Note: 
+- For using conda with with 3.7 on Apple Silicone, you may check: [link](https://github.com/conda/conda/issues/12206#issuecomment-1368982024)
+
 
 2. Clone the repo: `git clone https://github.com/lil-lab/lilgym.git`
 

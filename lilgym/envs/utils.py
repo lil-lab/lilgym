@@ -121,16 +121,8 @@ def is_action_valid(appearance: str, img_struct: List, action):
         if box == -1:
             return 0
 
-        # Case 1: remove when there's no element to remove at that place
         x, y = action.x(), action.y()
-        if is_remove(action):
-            x, y = action.x(), action.y()
-            img_x, img_y = convert_action_to_img_coordinates(x, y, box)
-            return any(
-                el["x_loc"] == img_x and el["y_loc"] == img_y for el in img_struct[box]
-            )
-
-        # Case 2: Add an object when it's not possible
+        # Case: Add an object when it's not possible
         # i.e.: add a 30x30px (large) object in a 20x20px cell, at the right/bottom of a box
         if is_add(action):
             size = action.size()
@@ -138,14 +130,16 @@ def is_action_valid(appearance: str, img_struct: List, action):
             if size == 2 and (img_x == 80 or img_y == 80):
                 return False
 
-            # Case 3: when it's impossible to add a shape (e.g. on top of another)
+            # Case: when it's impossible to add a shape (e.g. on top of another)
             shape, color = action.shape(), action.color()
             if not can_draw_item_scatter(action, None, img_struct):
                 return False
         elif is_remove(action):
+            # Case: remove when there's no element to remove at that place
             if not can_delete_item_scatter(action, None, img_struct):
                 return False
         return True
+
 
 def set_seeds(random_seed):
     torch.manual_seed(random_seed)

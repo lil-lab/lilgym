@@ -184,7 +184,7 @@ def get_base_image():
         x_end = int(x_start + BOX_SIZE)
         # Width has to be set, otherwise PILImage will add 1 more pixel to the right of the
         # separator columns
-        draw.rectangle([x_start, 0, x_end, BOX_SIZE], fill=(211, 211, 211, 255))
+        draw.rectangle([x_start, 0, x_end, BOX_SIZE], fill=Color.GRAY.as_rgb())
 
     for i in range(NUM_BOXES - 1):
         x_start = int(BOX_SIZE * (i + 1) + SEP_WIDTH * i)
@@ -742,9 +742,9 @@ def find_largest_item(x, y, cell_size, x_offset, items_in_box):
 
     # Create the cell object
     b_coord = {
-        "x1": x,
+        "x1": x + x_offset,
         "y1": y,
-        "x2": min(x + cell_size, BOX_SIZE),
+        "x2": min(x + cell_size, BOX_SIZE) + x_offset,
         "y2": min(y + cell_size, BOX_SIZE),
     }
     box = Polygon(
